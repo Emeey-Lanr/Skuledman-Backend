@@ -11,6 +11,10 @@ app.use(cors())
 app.use(express.json({ limit: "500mb" }))
 const adminRoute = require("./Routes/adminRoute")
 app.use("/school", adminRoute)
+const setRoute = require("./Routes/setroute")
+app.use("/set", setRoute)
+const studentRoute = require("./Routes/studentroute")
+app.use("/student", studentRoute)
 
 
 mongoose.connect(URI, (err) => {

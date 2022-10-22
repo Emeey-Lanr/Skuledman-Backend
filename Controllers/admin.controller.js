@@ -189,10 +189,38 @@ const resendOtp = (req, res) => {
     })
 
 }
+let schoolId = ""
+let schoolEmail = ""
+const edumanOtp = (req, res) => {
+    const edumanotp = req.headers.authorization.split(" ")[1]
+    jwt.verify(edumanotp, process.env.userToken, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            schoolId = result.pass.split(",")[1]
+            schoolEmail = result.pass.split(",")[0]
+            schoolModel.findOne({ _id: result.pass.split(",")[1] }, (err, result) => {
+                if (err) {
+                    res.send({ message: "couldn't find user, an error occured" })
+                } else {
+                    res.send({ status: true, schoolDetails: result },)
+                }
+            })
+
+        }
+    })
+
+}
+
+
+
+
+
 module.exports = {
     signUp,
     signIn,
     otpVerification,
     resendOtp,
+    edumanOtp,
 
 }
