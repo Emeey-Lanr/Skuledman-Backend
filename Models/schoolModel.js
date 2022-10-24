@@ -32,7 +32,7 @@ schoolSchema.methods.validatePassword = function (password, callback) {
     })
 }
 
-const schoolModel = mongoose.model("Eduman", schoolSchema)
+const schoolModel = mongoose.model("schoolsReg", schoolSchema)
 
 
 

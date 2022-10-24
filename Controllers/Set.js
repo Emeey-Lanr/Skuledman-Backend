@@ -9,7 +9,7 @@ const saveSet = (req, res) => {
 
     setSchemaModel.find({ schoolId: req.body.schoolId }, (err, result) => {
         if (err) {
-            consoel.log(err)
+            res.send({ message: "an error occured", status: false })
         } else {
             let Class = result.filter((sets, id) => sets.class === req.body.class)
             Class.map((sets, id) => {
@@ -21,7 +21,7 @@ const saveSet = (req, res) => {
         }
 
         if (check) {
-            res.send({ message: "A set alraedy exist with this set year", status: false })
+            res.send({ message: "A set already exist with this set year", status: false })
             console.log("user already exist")
         } else {
             setForm.save((err) => {
@@ -59,7 +59,82 @@ const getSet = (req, res) => {
     })
 }
 
+const getCurrentSet = (req, res) => {
+    const currentSetId = req.headers.authorization.split(" ")[1]
+    setSchemaModel.findOne({ _id: currentSetId }, (err, result) => {
+        if (err) {
+            res.send({ message: "can't find set", status: false })
+        } else {
+            res.send({ currentSet: result, status: true })
+        }
+
+    })
+}
+
+const updatePTAFeeAndSchoolFees = (req, res) => {
+    setSchemaModel.findOne({ _id: req.body.setId }, (err, result) => {
+        if (err) {
+            res.send({ message: "An error occured", status: false })
+        } else {
+            console.log(req.body.term)
+            if (req.body.term === "firstTerm") {
+                if (req.body.schoolFees === "") {
+                    result.firstTerm["ptaFees"] = req.body.ptaFees
+                } else if (req.body.ptaFees === "") {
+                    result.firstTerm["schoolFees"] = req.body.schoolFees
+                } else {
+                    result.firstTerm["ptaFees"] = req.body.ptaFees
+                    result.firstTerm["schoolFees"] = req.body.schoolFees
+                }
+
+
+
+            } else if (req.body.term === "secondTerm") {
+                // 
+                // 
+                if (req.body.schoolFees === "") {
+                    result.secondTerm["ptaFees"] = req.body.ptaFees
+                } else if (req.body.ptaFees === "") {
+                    result.secondTerm["schoolFees"] = req.body.schoolFees
+                } else {
+                    result.secondTerm["schoolFees"] = req.body.schoolFees
+                    result.secondTerm["ptaFees"] = req.body.ptaFees
+                }
+
+
+
+            } else if (req.body.term === "thirdTerm") {
+
+                if (req.body.schoolFees === "") {
+                    result.thirdTerm["ptaFees"] = req.body.ptaFees
+                } else if (req.body.ptaFees === "") {
+                    result.thirdTerm["schoolFees"] = req.body.schoolFees
+                } else {
+                    result.thirdTerm["ptaFees"] = req.body.ptaFees
+                    result.thirdTerm["schoolFees"] = req.body.schoolFees
+                }
+
+
+            }
+            setSchemaModel.findOneAndUpdate({ _id: req.body.setId }, result, (err) => {
+                if (err) {
+                    res.send({ message: "unable to update", status: false })
+                } else {
+                    res.send({ message: "updated succesfully", status: true })
+                }
+            })
+        }
+    })
+
+}
+
+
+///Craetion of list 
+
+
 module.exports = {
     saveSet,
     getSet,
+    getCurrentSet,
+    updatePTAFeeAndSchoolFees,
 }

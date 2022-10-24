@@ -4,15 +4,15 @@ const setSchema = mongoose.Schema({
     schoolEmail: { type: String },
     class: { type: String },
     set: { type: String },
-    firstTerm: { type: Array },
-    secondTerm: { type: Array },
-    thirdTerm: { type: Array },
+    firstTerm: { type: Object },
+    secondTerm: { type: Object },
+    thirdTerm: { type: Object },
     numberOFStudent: { type: String },
     totalDebt: { type: String },
     totalMoneyPaid: { type: String },
 })
 
-const setSchemaModel = mongoose.model("jss1Schema", setSchema)
+const setSchemaModel = mongoose.model("schoolSet", setSchema)
 
 
 

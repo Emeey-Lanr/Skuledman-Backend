@@ -21,6 +21,7 @@ const signUp = (req, res) => {
                         console.log(result)
                         const Otp = req.body.schoolEmail + ',' + String(req.body.otp)
                         const userOtp = jwt.sign({ pass: Otp }, process.env.Otp, { expiresIn: "1h" })
+
                         var transporter = nodemailer.createTransport({
                             service: 'gmail',
                             auth: {
@@ -145,7 +146,9 @@ const otpVerification = (req, res) => {
                             res.send({ message: "an error occured", status: false })
                         } else {
                             console.log("otp status updated succesfully")
-                            res.send({ message: "updated succedfully", status: true })
+                            const mixeduserToken = String(resultFound.schoolEmail) + "," + String(resultFound._id)
+                            const userToken = jwt.sign({ pass: mixeduserToken }, process.env.userToken, { expiresIn: "7days" })
+                            res.send({ message: "updated succedfully", status: true, token: userToken })
                         }
                     })
                 })
@@ -195,7 +198,7 @@ const edumanOtp = (req, res) => {
     const edumanotp = req.headers.authorization.split(" ")[1]
     jwt.verify(edumanotp, process.env.userToken, (err, result) => {
         if (err) {
-            console.log(err)
+            res.send({ message: "an error ocuured", status: false })
         } else {
             schoolId = result.pass.split(",")[1]
             schoolEmail = result.pass.split(",")[0]
