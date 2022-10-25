@@ -43,10 +43,8 @@ const getSet = (req, res) => {
     let schoolId = req.headers.authorization.split(" ")[1]
     setSchemaModel.find({ schoolId: schoolId }, (err, result) => {
         if (err) {
-            console.log('unabale to find set')
-            res.send({ status: false })
+            res.send({ status: false, message: "an error happened" })
         } else {
-            console.log(result)
             const jss1 = result.filter((sets, id) => sets.class === "Jss1")
             const jss2 = result.filter((sets, id) => sets.class === "Jss2")
             const jss3 = result.filter((sets, id) => sets.class === "Jss3")
@@ -76,7 +74,6 @@ const updatePTAFeeAndSchoolFees = (req, res) => {
         if (err) {
             res.send({ message: "An error occured", status: false })
         } else {
-            console.log(req.body.term)
             if (req.body.term === "firstTerm") {
                 if (req.body.schoolFees === "") {
                     result.firstTerm["ptaFees"] = req.body.ptaFees
@@ -129,12 +126,38 @@ const updatePTAFeeAndSchoolFees = (req, res) => {
 }
 
 
-///Craetion of list 
+///Creation of list 
+const createFeeList = (req, res) => {
 
+    setSchemaModel.findOne({ _id: req.body.setInfo["setid"] }, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
 
+            if (req.body.setInfo["currentTerm"] === "firstTerm") {
+                result.firstTerm["otherFee"].push(req.body["morelist"])
+
+            } else if (req.body.setInfo["currentTerm"] === "secondTerm") {
+                result.secondTerm["otherFee"].push(req.body["morelist"])
+
+            } else if (req.body.setInfo["currentTerm"] === "thirdTerm") {
+                result.thirdTerm["otherFee"].push(req.body["morelist"])
+
+            }
+            setSchemaModel.findByIdAndUpdate({ _id: req.body.setInfo["setid"] }, result, (err) => {
+                if (err) {
+                    res.send({ message: "an error occured updating", status: false })
+                } else {
+                    res.send({ message: "updated succesfully", status: true })
+                }
+            })
+        }
+    })
+}
 module.exports = {
     saveSet,
     getSet,
     getCurrentSet,
     updatePTAFeeAndSchoolFees,
+    createFeeList,
 }

@@ -3,12 +3,15 @@ const route = express.Router()
 const { saveSet,
     getSet,
     getCurrentSet,
-    updatePTAFeeAndSchoolFees } = require("../Controllers/Set")
+    updatePTAFeeAndSchoolFees,
+    createFeeList
+} = require("../Controllers/Set")
 
 route.post("/newset", saveSet)
 route.get("/getset", getSet)
 route.get("/currentSet", getCurrentSet)
 route.patch("/updateFees", updatePTAFeeAndSchoolFees)
+route.patch("/createList", createFeeList)
 
 
 

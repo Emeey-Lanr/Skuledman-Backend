@@ -1,7 +1,14 @@
 const express = require("express")
 const route = express.Router()
-const { } = require("../Controllers/studentContoller")
+const {
+    registerStudent,
+    searchStudentBelowSet,
+    addStudentToNewSet
+} = require("../Controllers/studentContoller")
 
+route.post("/registerStudent", registerStudent)
+route.get("/searchStudentToAdd", searchStudentBelowSet)
+route.patch("/addStudentToNewSet", addStudentToNewSet)
 
 
 
