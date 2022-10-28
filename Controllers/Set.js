@@ -1,10 +1,10 @@
 const mongoose = require("mongoose")
 const setSchemaModel = require("../Models/set")
+const studentModel = require("../Models/Student")
 
 let check = false
 let schoolid = ""
 const saveSet = (req, res) => {
-    console.log(req.body.class, req.body.set)
     let setForm = new setSchemaModel(req.body)
 
     setSchemaModel.find({ schoolId: req.body.schoolId }, (err, result) => {
@@ -58,12 +58,229 @@ const getSet = (req, res) => {
 }
 
 const getCurrentSet = (req, res) => {
+    let firstTermStudent = []
+    let secondTermStudent = []
+    let thirdTermStudent = []
+    let totalSchoolFeesForFirstTerm = 0
+    let totalSchoolFeesForSecondTerm = 0
+    let totalSchoolFeesForThirdTerm = 0
+    let totalPtaFeesForFirstTerm = 0
+    let totalPtaFeesForSecondTerm = 0
+    let totalPtaFeesForThirdTerm = 0
+    let studentTotalFirstTermPaid = 0
+    let studentTotalSecondTermPaid = 0
+    let studentTotalthirTermPaid = 0
     const currentSetId = req.headers.authorization.split(" ")[1]
-    setSchemaModel.findOne({ _id: currentSetId }, (err, result) => {
+    setSchemaModel.findOne({ _id: currentSetId }, (err, resultFound) => {
         if (err) {
             res.send({ message: "can't find set", status: false })
         } else {
-            res.send({ currentSet: result, status: true })
+            if (resultFound.class === "Jss1") {
+                studentModel.find({ jss1Id: resultFound._id }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log(result)
+                        firstTermStudent = result.filter((student, id) => student.jss1.firstTermStatus === true)
+                        secondTermStudent = result.filter((student, id) => student.jss1.secondTermStatus === true)
+                        thirdTermStudent = result.filter((student, id) => student.jss1.thirdTermStatus === true)
+                        totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
+                        totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
+                        totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
+                        totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
+                        totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
+                        totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+                        //to check the total paid so far
+                        if (firstTermStudent.length > 0) {
+                            firstTermStudent.map((student, id) => {
+                                studentTotalFirstTermPaid += student.jss1.firstTermSchoolFees
+                            })
+                        }
+                        if (secondTermStudent.length > 0) {
+                            secondTermStudent.map((student, id) => {
+                                studentTotalSecondTermPaid += student.jss1.secondTermSchoolFees
+                            })
+                        }
+                        if (thirdTermStudent.length > 0) {
+                            thirdTermStudent.map((student, id) => {
+                                studentTotalthirTermPaid += student.jss1.secondTermSchoolFees
+                            })
+                        }
+
+
+                    }
+                })
+            } else if (resultFound.class === "Jss2") {
+                studentModel.find({ jss2Id: result_id }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        firstTermStudent = result.filter((student, id) => student.jss2.firstTermStatus === true)
+                        secondTermStudent = result.filter((student, id) => student.jss2.secondTermStatus === true)
+                        thirdTermStudent = result.filter((student, id) => student.jss2.thirdTermStatus === true)
+                        totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
+                        totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
+                        totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
+                        totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
+                        totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
+                        totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+                        if (firstTermStudent.length > 0) {
+                            firstTermStudent.map((student, id) => {
+                                studentTotalFirstTermPaid += student.jss2.firstTermSchoolFees
+                            })
+                        }
+                        if (secondTermStudent.length > 0) {
+                            secondTermStudent.map((student, id) => {
+                                studentTotalSecondTermPaid += student.jss2.secondTermSchoolFees
+                            })
+                        }
+                        if (thirdTermStudent.length > 0) {
+                            thirdTermStudent.map((student, id) => {
+                                studentTotalthirTermPaid += student.jss2.secondTermSchoolFees
+                            })
+                        }
+
+                    }
+                })
+
+            } else if (resultFound.class === "Jss3") {
+                studentModel.find({ jss3Id: resultFound._id }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        firstTermStudent = result.filter((student, id) => student.jss3.firstTermStatus === true)
+                        secondTermStudent = result.filter((student, id) => student.jss3.secondTermStatus === true)
+                        thirdTermStudent = result.filter((student, id) => student.jss3.thirdTermStatus === true)
+                        totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
+                        totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
+                        totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
+                        totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
+                        totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
+                        totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+                        if (firstTermStudent.length > 0) {
+                            firstTermStudent.map((student, id) => {
+                                studentTotalFirstTermPaid += student.jss3.firstTermSchoolFees
+                            })
+                        }
+                        if (secondTermStudent.length > 0) {
+                            secondTermStudent.map((student, id) => {
+                                studentTotalSecondTermPaid += student.jss3.secondTermSchoolFees
+                            })
+                        }
+                        if (thirdTermStudent.length > 0) {
+                            thirdTermStudent.map((student, id) => {
+                                studentTotalthirTermPaid += student.jss3.secondTermSchoolFees
+                            })
+                        }
+                    }
+                })
+
+
+            } else if (resultFound.class === "Sss1") {
+                studentModel.find({ sss1Id: resultFound._id }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        firstTermStudent = result.filter((student, id) => student.sss1.firstTermStatus === true)
+                        secondTermStudent = result.filter((student, id) => student.sss1.secondTermStatus === true)
+                        thirdTermStudent = result.filter((student, id) => student.sss1.thirdTermStatus === true)
+                        totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
+                        totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
+                        totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
+                        totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
+                        totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
+                        totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+                        if (firstTermStudent.length > 0) {
+                            firstTermStudent.map((student, id) => {
+                                studentTotalFirstTermPaid += student.sss1.firstTermSchoolFees
+                            })
+                        }
+                        if (secondTermStudent.length > 0) {
+                            secondTermStudent.map((student, id) => {
+                                studentTotalSecondTermPaid += student.sss1.secondTermSchoolFees
+                            })
+                        }
+                        if (thirdTermStudent.length > 0) {
+                            thirdTermStudent.map((student, id) => {
+                                studentTotalthirTermPaid += student.sss1.secondTermSchoolFees
+                            })
+                        }
+                    }
+
+                })
+
+
+            } else if (resultFound.class === "Sss2") {
+                studentModel.find({ sss2Id: resultFound._id }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        firstTermStudent = result.filter((student, id) => student.sss2.firstTermStatus === true)
+                        secondTermStudent = result.filter((student, id) => student.sss2.secondTermStatus === true)
+                        thirdTermStudent = result.filter((student, id) => student.sss2.thirdTermStatus === true)
+                        totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
+                        totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
+                        totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
+                        totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
+                        totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
+                        totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+                    }
+                    if (firstTermStudent.length > 0) {
+                        firstTermStudent.map((student, id) => {
+                            studentTotalFirstTermPaid += student.sss2.firstTermSchoolFees
+                        })
+                    }
+                    if (secondTermStudent.length > 0) {
+                        secondTermStudent.map((student, id) => {
+                            studentTotalSecondTermPaid += student.sss2.secondTermSchoolFees
+                        })
+                    }
+                    if (thirdTermStudent.length > 0) {
+                        thirdTermStudent.map((student, id) => {
+                            studentTotalthirTermPaid += student.sss2.secondTermSchoolFees
+                        })
+                    }
+                })
+
+            } else if (resultFound.class === "Sss3") {
+                studentModel.find({ sss3Id: resultFound._id }, (err, result) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        firstTermStudent = result.filter((student, id) => student.sss3.firstTermStatus === true)
+                        secondTermStudent = result.filter((student, id) => student.sss3.secondTermStatus === true)
+                        thirdTermStudent = result.filter((student, id) => student.sss3.thirdTermStatus === true)
+                        totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
+                        totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
+                        totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
+                        totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
+                        totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
+                        totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+                    }
+                    if (firstTermStudent.length > 0) {
+                        firstTermStudent.map((student, id) => {
+                            studentTotalFirstTermPaid += student.sss3.firstTermSchoolFees
+                        })
+                    }
+                    if (secondTermStudent.length > 0) {
+                        secondTermStudent.map((student, id) => {
+                            studentTotalSecondTermPaid += student.sss3.secondTermSchoolFees
+                        })
+                    }
+                    if (thirdTermStudent.length > 0) {
+                        thirdTermStudent.map((student, id) => {
+                            studentTotalthirTermPaid += student.sss3.secondTermSchoolFees
+                        })
+                    }
+
+                })
+
+            }
+            const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+            const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+            const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+
+            res.send({ currentSet: resultFound, status: true })
         }
 
     })
