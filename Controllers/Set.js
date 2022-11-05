@@ -111,7 +111,7 @@ const getCurrentSet = (req, res) => {
                     }
                 })
             } else if (resultFound.class === "Jss2") {
-                studentModel.find({ jss2Id: result_id }, (err, result) => {
+                studentModel.find({ jss2Id: result._id }, (err, result) => {
                     if (err) {
                         console.log(err)
                     } else {
@@ -350,26 +350,61 @@ const createFeeList = (req, res) => {
         if (err) {
             console.log(err)
         } else {
+            if (result !== null) {
+                if (req.body.setInfo["currentTerm"] === "firstTerm") {
+                    result.firstTerm["otherFee"].push(req.body["morelist"])
 
-            if (req.body.setInfo["currentTerm"] === "firstTerm") {
-                result.firstTerm["otherFee"].push(req.body["morelist"])
+                } else if (req.body.setInfo["currentTerm"] === "secondTerm") {
+                    result.secondTerm["otherFee"].push(req.body["morelist"])
 
-            } else if (req.body.setInfo["currentTerm"] === "secondTerm") {
-                result.secondTerm["otherFee"].push(req.body["morelist"])
+                } else if (req.body.setInfo["currentTerm"] === "thirdTerm") {
+                    result.thirdTerm["otherFee"].push(req.body["morelist"])
 
-            } else if (req.body.setInfo["currentTerm"] === "thirdTerm") {
-                result.thirdTerm["otherFee"].push(req.body["morelist"])
-
-            }
-            setSchemaModel.findByIdAndUpdate({ _id: req.body.setInfo["setid"] }, result, (err) => {
-                if (err) {
-                    res.send({ message: "an error occured updating", status: false })
-                } else {
-                    res.send({ message: "updated succesfully", status: true })
                 }
-            })
+                setSchemaModel.findByIdAndUpdate({ _id: req.body.setInfo["setid"] }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "an error occured updating", status: false })
+                    } else {
+                        res.send({ message: "updated succesfully", status: true })
+                    }
+                })
+            }
+
         }
     })
+}
+
+
+const delPriceList = (req, res) => {
+    setSchemaModel.findOne({ _id: req.body.setId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured", status: false })
+        } else {
+            if (result !== null) {
+                if (req.body.term === "firstTerm") {
+                    let newOtherFee = result.firstTerm.otherFee.filter((info, id) => info.description !== req.body.priceListName)
+                    result.firstTerm.otherFee = newOtherFee
+                } else if (req.body.term === "secondTerm") {
+                    let newOtherFee = result.secondTerm.otherFee.filter((info, id) => info.description !== req.body.priceListName)
+                    result.secondTerm.otherFee = newOtherFee
+                } else if (req.body.term === "thirdTerm") {
+                    let newOtherFee = result.thirdTerm.otherFee.filter((info, id) => info.description !== req.body.priceListName)
+                    result.thirdTerm.otherFee = newOtherFee
+                }
+                setSchemaModel.findByIdAndUpdate({ _id: req.body.setId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "unable to delete", status: false })
+                    } else {
+                        res.send({ message: "deleted succesfully", status: true })
+                    }
+                })
+            } else {
+                res.send({ messsage: "an error occured when operating command", status: false })
+            }
+        }
+
+    })
+
 }
 module.exports = {
     saveSet,
@@ -377,4 +412,5 @@ module.exports = {
     getCurrentSet,
     updatePTAFeeAndSchoolFees,
     createFeeList,
+    delPriceList
 }

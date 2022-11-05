@@ -62,14 +62,13 @@ const signUp = (req, res) => {
 const signIn = (req, res) => {
     schoolModel.findOne({ schoolEmail: req.body.schoolEmail }, (err, result) => {
         if (err) {
-            console.log(err)
+            res.send({ message: "an error occured", status: false })
         } else {
-            if (result) {
+            if (result !== null) {
                 result.validatePassword(req.body.schoolPass, (err, same) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ message: "an error occured", status: false })
                     } else {
-                        console.log(same)
                         if (same === true) {
                             if (result.otpStatus === false) {
                                 const Otp = req.body.schoolEmail + ',' + String(req.body.otp)

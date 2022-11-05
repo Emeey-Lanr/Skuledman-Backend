@@ -4,7 +4,8 @@ const { saveSet,
     getSet,
     getCurrentSet,
     updatePTAFeeAndSchoolFees,
-    createFeeList
+    createFeeList,
+    delPriceList
 } = require("../Controllers/Set")
 
 route.post("/newset", saveSet)
@@ -12,6 +13,7 @@ route.get("/getset", getSet)
 route.get("/currentSet", getCurrentSet)
 route.patch("/updateFees", updatePTAFeeAndSchoolFees)
 route.patch("/createList", createFeeList)
+route.patch("/deletePriceList", delPriceList)
 
 
 
