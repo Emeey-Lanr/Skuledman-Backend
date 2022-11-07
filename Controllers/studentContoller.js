@@ -271,10 +271,36 @@ const uploadStudentImg = (req, res) => {
     console.log(req.body.imgurl)
 }
 
+//add parent email and phone number
+const saveChanges = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured", status: false })
+        } else {
+            if (result !== null) {
+                result.firstName = req.body.firstName
+                result.middleName = req.body.middleName
+                result.surName = req.body.surName
+                result.parentGmail = req.body.parentGmail
+                result.parentPhoneNumber = req.body.parentPhoneNumber
+                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "unable to save changes", status: false })
+                    } else {
+                        res.send({ message: "changes made succesfully", status: true })
+                    }
+                })
+
+            }
+        }
+    })
+
+}
+
 const activateStatus = (req, res) => {
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
-            res.send({ message: "an err occured", status: false })
+            res.send({ message: "an error occured", status: false })
         } else {
             if (result !== null) {
                 if (req.body.class === "Jss1") {
@@ -343,6 +369,101 @@ const activateStatus = (req, res) => {
         }
     })
 
+}
+
+const addSchoolFee = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured", status: false })
+        } else {
+            if (result !== null) {
+                if (req.body.class === "Jss1") {
+                    if (req.body.term === 1) {
+                        result.jss1.firstTermSchoolFees = Number(req.body.fee) + Number(result.jss1.firstTermSchoolFees)
+                    } else if (req.body.term === 2) {
+                        result.jss1.secondTermSchoolFees = Number(req.body.fee) + Number(result.jss1.secondTermSchoolFees)
+                    } else if (req.body.term === 3) {
+                        result.jss1.thirdTermSchoolFees = Number(req.body.fee) + Number(result.jss1.thirdTermSchoolFees)
+                    }
+                } else if (req.body.class === "Jss2") {
+                    if (req.body.term === 1) {
+                        result.jss2.firstTermSchoolFees = Number(req.body.fee) + Number(result.jss2.firstTermSchoolFees)
+                    } else if (req.body.term === 2) {
+                        result.jss2.secondTermSchoolFees = Number(req.body.fee) + Number(result.jss2.secondTermSchoolFees)
+                    } else if (req.body.term === 3) {
+                        result.jss2.thirdTermSchoolFees = Number(req.body.fee) + Number(result.jss2.thirdTermSchoolFees)
+                    }
+                } else if (req.body.class === "Jss3") {
+                    if (req.body.term === 1) {
+                        result.jss3.firstTermSchoolFees = Number(req.body.fee) + Number(result.jss3.firstTermSchoolFees)
+                    } else if (req.body.term === 2) {
+                        result.jss3.secondTermSchoolFees = Number(req.body.fee) + Number(result.jss3.secondTermSchoolFees)
+                    } else if (req.body.term === 3) {
+                        result.jss3.thirdTermSchoolFees = Number(req.body.fee) + Number(result.jss3.thirdTermSchoolFees)
+                    }
+                } else if (req.body.class === "Sss1") {
+                    if (req.body.term === 1) {
+                        result.sss1.firstTermSchoolFees = Number(req.body.fee) + Number(result.sss1.firstTermSchoolFees)
+                    } else if (req.body.term === 2) {
+                        result.sss1.secondTermSchoolFees = Number(req.body.fee) + Number(result.sss1.secondTermSchoolFees)
+                    } else if (req.body.term === 3) {
+                        result.sss1.thirdTermSchoolFees = Number(req.body.fee) + Number(result.sss1.thirdTermSchoolFees)
+                    }
+                } else if (req.body.class === "Sss2") {
+                    if (req.body.term === 1) {
+                        result.sss2.firstTermSchoolFees = Number(req.body.fee) + Number(result.sss2.firstTermSchoolFees)
+                    } else if (req.body.term === 2) {
+                        result.sss2.secondTermSchoolFees = Number(req.body.fee) + Number(result.sss2.secondTermSchoolFees)
+                    } else if (req.body.term === 3) {
+                        result.sss2.thirdTermSchoolFees = Number(req.body.fee) + Number(result.sss2.thirdTermSchoolFees)
+                    }
+                } else if (req.body.class === "Sss3") {
+                    if (req.body.term === 1) {
+                        result.sss3.firstTermSchoolFees = Number(req.body.fee) + Number(result.sss3.firstTermSchoolFees)
+                    } else if (req.body.term === 2) {
+                        result.sss3.secondTermSchoolFees = Number(req.body.fee) + Number(result.sss3.secondTermSchoolFees)
+                    } else if (req.body.term === 3) {
+                        result.sss3.thirdTermSchoolFees = Number(req.body.fee) + Number(result.sss3.thirdTermSchoolFees)
+                    }
+                }
+                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "an error occured", status: false })
+                    } else {
+                        res.send({ message: "updated succesfully", status: true })
+                    }
+                })
+            }
+        }
+    })
+}
+
+const addPtaFee = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured", status: false })
+        } else {
+            if (result !== null) {
+                if (req.body.class === "Jss1") {
+                    if (req.body.term === 1) {
+                        result.jss1.firstTermPtaFees = req.body.fee
+                    } else if (req.body.term === 2) {
+                        result.jss1.secondTermPtaFees = req.body.fee
+                    } else if (req.body.term === 3) {
+                        result.jss1.thirdTermPtaFees = req.body.fee
+                    }
+                }
+
+                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "an error occured", status: false })
+                    } else {
+                        res.send({ message: "updated succesfully", status: true })
+                    }
+                })
+            }
+        }
+    })
 }
 
 let errrorMessage = "an error occured"
@@ -926,7 +1047,10 @@ module.exports = {
     getStudent,
     gettingTheCurrentStudent,
     uploadStudentImg,
+    saveChanges,
     activateStatus,
+    addSchoolFee,
+    addPtaFee,
     addSubject,
     addValue,
     deleteSubject,

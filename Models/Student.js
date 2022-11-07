@@ -8,6 +8,8 @@ const studentSchema = mongoose.Schema({
     imgUrl: { type: String },
     schoolUniqueId: { type: Number },
     currentClass: { type: String },
+    parentGmail: { type: String },
+    parentPhoneNumber: { type: String },
     jss1Id: { type: String },
     jss2Id: { type: String },
     jss3Id: { type: String },
