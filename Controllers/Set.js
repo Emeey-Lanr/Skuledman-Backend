@@ -70,6 +70,11 @@ const getCurrentSet = (req, res) => {
     let studentTotalFirstTermPaid = 0
     let studentTotalSecondTermPaid = 0
     let studentTotalthirTermPaid = 0
+
+    let studentTotalFirstPtaFeePaid = 0
+    let studentTotalSecondPtaFeePaid = 0
+    let studentTotalThirdPtaFeePaid = 0
+
     const currentSetId = req.headers.authorization.split(" ")[1]
     setSchemaModel.findOne({ _id: currentSetId }, (err, resultFound) => {
         if (err) {
@@ -94,16 +99,19 @@ const getCurrentSet = (req, res) => {
                         if (firstTermStudent.length > 0) {
                             firstTermStudent.map((student, id) => {
                                 studentTotalFirstTermPaid += student.jss1.firstTermSchoolFees
+                                studentTotalFirstPtaFeePaid += student.jss1.firstTermPtaFees
                             })
                         }
                         if (secondTermStudent.length > 0) {
                             secondTermStudent.map((student, id) => {
                                 studentTotalSecondTermPaid += student.jss1.secondTermSchoolFees
+                                studentTotalSecondPtaFeePaid += student.jss1.secondTermPtaFees
                             })
                         }
                         if (thirdTermStudent.length > 0) {
                             thirdTermStudent.map((student, id) => {
                                 studentTotalthirTermPaid += student.jss1.secondTermSchoolFees
+                                studentTotalThirdPtaFeePaid += student.jss1.thirdTermPtaFees
                             })
                         }
 
@@ -128,16 +136,19 @@ const getCurrentSet = (req, res) => {
                             if (firstTermStudent.length > 0) {
                                 firstTermStudent.map((student, id) => {
                                     studentTotalFirstTermPaid += student.jss2.firstTermSchoolFees
+                                    studentTotalFirstPtaFeePaid += student.jss2.firstTermPtaFees
                                 })
                             }
                             if (secondTermStudent.length > 0) {
                                 secondTermStudent.map((student, id) => {
                                     studentTotalSecondTermPaid += student.jss2.secondTermSchoolFees
+                                    studentTotalSecondPtaFeePaid += student.jss2.secondTermPtaFees
                                 })
                             }
                             if (thirdTermStudent.length > 0) {
                                 thirdTermStudent.map((student, id) => {
                                     studentTotalthirTermPaid += student.jss2.secondTermSchoolFees
+                                    studentTotalThirdPtaFeePaid += student.jss2.thirdTermPtaFees
                                 })
                             }
                         }
@@ -162,16 +173,19 @@ const getCurrentSet = (req, res) => {
                         if (firstTermStudent.length > 0) {
                             firstTermStudent.map((student, id) => {
                                 studentTotalFirstTermPaid += student.jss3.firstTermSchoolFees
+                                studentTotalFirstPtaFeePaid += student.jss3.firstTermPtaFees
                             })
                         }
                         if (secondTermStudent.length > 0) {
                             secondTermStudent.map((student, id) => {
                                 studentTotalSecondTermPaid += student.jss3.secondTermSchoolFees
+                                studentTotalSecondPtaFeePaid += student.jss3.secondTermPtaFees
                             })
                         }
                         if (thirdTermStudent.length > 0) {
                             thirdTermStudent.map((student, id) => {
                                 studentTotalthirTermPaid += student.jss3.secondTermSchoolFees
+                                studentTotalThirdPtaFeePaid += student.jss3.thirdTermPtaFees
                             })
                         }
                     }
@@ -195,16 +209,19 @@ const getCurrentSet = (req, res) => {
                         if (firstTermStudent.length > 0) {
                             firstTermStudent.map((student, id) => {
                                 studentTotalFirstTermPaid += student.sss1.firstTermSchoolFees
+                                studentTotalFirstPtaFeePaid += student.sss1.firstTermPtaFees
                             })
                         }
                         if (secondTermStudent.length > 0) {
                             secondTermStudent.map((student, id) => {
                                 studentTotalSecondTermPaid += student.sss1.secondTermSchoolFees
+                                studentTotalSecondPtaFeePaid += student.sss1.secondTermPtaFees
                             })
                         }
                         if (thirdTermStudent.length > 0) {
                             thirdTermStudent.map((student, id) => {
                                 studentTotalthirTermPaid += student.sss1.secondTermSchoolFees
+                                studentTotalThirdPtaFeePaid += student.sss1.thirdTermPtaFees
                             })
                         }
                     }
@@ -230,16 +247,19 @@ const getCurrentSet = (req, res) => {
                     if (firstTermStudent.length > 0) {
                         firstTermStudent.map((student, id) => {
                             studentTotalFirstTermPaid += student.sss2.firstTermSchoolFees
+                            studentTotalFirstPtaFeePaid += student.sss2.firstTermPtaFees
                         })
                     }
                     if (secondTermStudent.length > 0) {
                         secondTermStudent.map((student, id) => {
                             studentTotalSecondTermPaid += student.sss2.secondTermSchoolFees
+                            studentTotalSecondPtaFeePaid += student.sss2.secondTermPtaFees
                         })
                     }
                     if (thirdTermStudent.length > 0) {
                         thirdTermStudent.map((student, id) => {
                             studentTotalthirTermPaid += student.sss2.secondTermSchoolFees
+                            studentTotalThirdPtaFeePaid += student.sss2.thirdTermPtaFees
                         })
                     }
                 })
@@ -262,27 +282,61 @@ const getCurrentSet = (req, res) => {
                     if (firstTermStudent.length > 0) {
                         firstTermStudent.map((student, id) => {
                             studentTotalFirstTermPaid += student.sss3.firstTermSchoolFees
+                            studentTotalFirstPtaFeePaid += student.sss3.firstTermPtaFees
                         })
                     }
                     if (secondTermStudent.length > 0) {
                         secondTermStudent.map((student, id) => {
                             studentTotalSecondTermPaid += student.sss3.secondTermSchoolFees
+                            studentTotalSecondPtaFeePaid += student.sss3.secondTermPtaFees
                         })
                     }
                     if (thirdTermStudent.length > 0) {
                         thirdTermStudent.map((student, id) => {
                             studentTotalthirTermPaid += student.sss3.secondTermSchoolFees
+                            studentTotalThirdPtaFeePaid += student.sss2.thirdTermPtaFees
                         })
                     }
 
                 })
 
             }
+            ///School Feee
             const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
             const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
             const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+            ////Pta
+            const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+            const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+            const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
 
-            res.send({ currentSet: resultFound, status: true })
+
+            res.send({
+                currentSet: resultFound,
+                ///School debt Fees
+                firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
+                secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                ///SchoolFees Amount already paid
+                studentSFirstTermPaid: studentTotalFirstTermPaid,
+                studentSSecondTermPaid: studentTotalSecondTermPaid,
+                studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                ///Pta Fees
+                firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
+                secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+
+
+                ////Number of student
+                firstnumberOfStudent: firstTermStudent,
+                secondTotalNumberOfStudent: secondTermStudent,
+                thirdTotalNumberOfStudent: thirdTermStudent,
+                status: true
+            })
         }
 
     })

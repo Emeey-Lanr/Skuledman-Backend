@@ -4,6 +4,12 @@ const { format } = require("express/lib/response")
 const mongoose = require("mongoose")
 const setSchemaModel = require("../Models/set")
 const studentModel = require("../Models/Student")
+const cloudinary = require("cloudinary")
+cloudinary.config({
+    cloud_name: process.env.cloudName,
+    api_key: process.env.cloudinaryApiKey,
+    api_secret: process.env.cloudinaryApiSecret
+});
 
 ///Regustering of student for the first time
 const registerStudent = (req, res) => {
@@ -268,7 +274,31 @@ const gettingTheCurrentStudent = (req, res) => {
 }
 
 const uploadStudentImg = (req, res) => {
-    console.log(req.body.imgurl)
+    cloudinary.v2.uploader.upload(req.body.imgUrl, { public_id: "studentimage" }, (error, result) => {
+        if (error) {
+            res.send({ message: "an error happened uploading", status: false })
+        } else {
+            studentModel.findOne({ _id: req.body.userId }, (err, resultt) => {
+                if (err) {
+                    res.send({ message: "an error occured", status: false })
+                } else {
+                    if (resultt !== null) {
+                        resultt.imgUrl = result.url
+                        studentModel.findByIdAndUpdate({ _id: req.body.userId }, resultt, (err) => {
+                            if (err) {
+                                res.send({ message: "unable to update", status: false })
+                            } else {
+                                res.send({ message: "image updated succesfully", status: true })
+                            }
+                        })
+                    }
+                }
+            })
+        }
+
+    });
+
+
 }
 
 //add parent email and phone number
@@ -481,6 +511,7 @@ const addSubject = (req, res) => {
                         result.jss1.firstTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -488,6 +519,7 @@ const addSubject = (req, res) => {
                         result.jss1.secondTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -496,6 +528,7 @@ const addSubject = (req, res) => {
                         result.jss1.thirdTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -506,6 +539,7 @@ const addSubject = (req, res) => {
                         result.jss2.firstTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -513,6 +547,7 @@ const addSubject = (req, res) => {
                         result.jss2.secondTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -521,6 +556,7 @@ const addSubject = (req, res) => {
                         result.jss2.thirdTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -531,6 +567,7 @@ const addSubject = (req, res) => {
                         result.jss3.firstTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -538,6 +575,7 @@ const addSubject = (req, res) => {
                         result.jss3.secondTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -546,6 +584,7 @@ const addSubject = (req, res) => {
                         result.jss3.thirdTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -556,6 +595,7 @@ const addSubject = (req, res) => {
                         result.sss1.firstTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -563,6 +603,7 @@ const addSubject = (req, res) => {
                         result.sss1.secondTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -571,6 +612,7 @@ const addSubject = (req, res) => {
                         result.sss1.thirdTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -581,6 +623,7 @@ const addSubject = (req, res) => {
                         result.sss2.firstTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -588,6 +631,7 @@ const addSubject = (req, res) => {
                         result.sss2.secondTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -596,6 +640,7 @@ const addSubject = (req, res) => {
                         result.sss2.thirdTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -606,6 +651,7 @@ const addSubject = (req, res) => {
                         result.sss3.firstTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -613,6 +659,7 @@ const addSubject = (req, res) => {
                         result.sss3.secondTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -621,6 +668,7 @@ const addSubject = (req, res) => {
                         result.sss3.thirdTermResult.push(
                             {
                                 subject: req.body.subjectName,
+                                totalScore: 0,
                                 resultNameXResultScore: []
                             }
                         )
@@ -642,6 +690,7 @@ const addSubject = (req, res) => {
 }
 
 const addValue = (req, res) => {
+    const totalScoreUpdate = 0
     studentModel.findById({ _id: req.body.userInfo.studentId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured", status: false })
@@ -653,6 +702,11 @@ const addValue = (req, res) => {
                         result.jss1.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
 
@@ -660,6 +714,11 @@ const addValue = (req, res) => {
                         result.jss1.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
 
@@ -667,6 +726,11 @@ const addValue = (req, res) => {
                         result.jss1.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     }
@@ -675,18 +739,33 @@ const addValue = (req, res) => {
                         result.jss2.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 2) {
                         result.jss2.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 3) {
                         result.jss2.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     }
@@ -695,18 +774,33 @@ const addValue = (req, res) => {
                         result.jss3.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 2) {
                         result.jss3.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 3) {
                         result.jss3.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     }
@@ -715,18 +809,33 @@ const addValue = (req, res) => {
                         result.sss1.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 2) {
                         result.sss1.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 3) {
                         result.sss1.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     }
@@ -735,12 +844,22 @@ const addValue = (req, res) => {
                         result.sss2.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 2) {
                         result.sss2.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
 
@@ -748,6 +867,11 @@ const addValue = (req, res) => {
                         result.sss2.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     }
@@ -756,12 +880,22 @@ const addValue = (req, res) => {
                         result.sss3.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     } else if (req.body.userInfo.term === 2) {
                         result.sss3.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
 
@@ -769,6 +903,11 @@ const addValue = (req, res) => {
                         result.sss3.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
+                                info.resultNameXResultScore.map((score, id) => {
+                                    totalScoreUpdate += score.valuePoint
+                                })
+                                info.totalScore = totalScoreUpdate
+
                             }
                         })
                     }
@@ -1039,6 +1178,133 @@ const deletingValuePoint = (req, res) => {
 
 
 
+const EditSubject = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured" })
+        } else {
+            if (result !== null) {
+                if (req.body.studentClass === "Jss1") {
+                    if (req.body.term === 1) {
+                        result.jss1.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.subject = req.body.newSubject
+                            }
+                        })
+                    } else if (req.body.term === 2) {
+                        result.jss1.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.subject = req.body.newSubject
+                            }
+                        })
+                    } else if (req.body.term === 3) {
+                        result.jss1.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.subject = req.body.newSubject
+                            }
+                        })
+                    }
+                }
+
+                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "an error occured updating subject", status: false })
+                    } else {
+                        res.send({ message: "updated succesfully", status: true })
+                    }
+                })
+            }
+        }
+    })
+}
+
+const editValuePointName = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured" })
+        } else {
+            if (result !== null) {
+                if (req.body.studentClass === "Jss1") {
+                    if (req.body.term === 1) {
+                        result.jss1.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.jss1.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.jss1.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                            }
+
+                        })
+
+                    }
+                }
+                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "an error occured updating subject", status: false })
+                    } else {
+                        res.send({ message: "updated succesfully", status: true })
+                    }
+                })
+            }
+        }
+    })
+}
+
+const editValuePoint = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            res.send({ message: "an error occured" })
+        } else {
+            if (result !== null) {
+                if (req.body.studentClass === "Jss1") {
+                    if (req.body.term === 1) {
+                        result.jss1.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.jss1.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.jss1.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    }
+                }
+                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                    if (err) {
+                        res.send({ message: "an error occured updating subject", status: false })
+                    } else {
+                        res.send({ message: "updated succesfully", status: true })
+                    }
+                })
+            }
+        }
+    })
+}
 
 module.exports = {
     registerStudent,
@@ -1054,7 +1320,10 @@ module.exports = {
     addSubject,
     addValue,
     deleteSubject,
-    deletingValuePoint
+    deletingValuePoint,
+    EditSubject,
+    editValuePointName,
+    editValuePoint
 
 
 }

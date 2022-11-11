@@ -25,7 +25,7 @@ const studentSchema = mongoose.Schema({
 })
 
 
-const studentModel = mongoose.model("/studentCollection", studentSchema)
+const studentModel = mongoose.model("studentCollection", studentSchema)
 
 
 module.exports = studentModel

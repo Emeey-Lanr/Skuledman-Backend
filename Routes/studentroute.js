@@ -14,7 +14,10 @@ const {
     addSubject,
     addValue,
     deleteSubject,
-    deletingValuePoint
+    deletingValuePoint,
+    EditSubject,
+    editValuePointName,
+    editValuePoint
 } = require("../Controllers/studentContoller")
 
 route.post("/registerStudent", registerStudent)
@@ -31,6 +34,9 @@ route.patch("/addSubject", addSubject)
 route.patch("/addvaluetosubject", addValue)
 route.patch("/deletesubject", deleteSubject)
 route.patch("/deleteValuePoint", deletingValuePoint)
+route.patch("/editsubject", EditSubject)
+route.patch("/editvaluePointName", editValuePointName)
+route.patch("/editvaluepoint", editValuePoint)
 
 
 

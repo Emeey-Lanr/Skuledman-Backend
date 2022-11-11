@@ -25,20 +25,63 @@ const signUp = (req, res) => {
                         var transporter = nodemailer.createTransport({
                             service: 'gmail',
                             auth: {
-                                user: 'emeeylanr04@gmail.com',
+                                user: 'skuledman@gmail.com',
                                 pass: process.env.appPass,
                             }
                         })
                         var mailOptions = {
-                            from: 'Ec',
+                            from: 'Skuledman',
                             to: `${req.body.schoolEmail}`,
-                            subject: "Eduman",
+                            subject: "Skuledman Email Verification",
                             text: '',
-                            html: `<h1 style="text-align: center;color:#ff6400;">Eduman</h1>
-                                    <p style="text-align: center;">Your OTP code is </p>
-                                     <h1 style="color:#ff6400; text-align: center; padding:10px 0;">
-                                   <span>${req.body.otp}</span>
-                                     </h1>`
+                            html: `  <h1 style="text-align: center;color:#ff6400;">Eduman</h1>
+                            <div style="display:flex; justify-content:center;">
+                                <div style="display: flex; padding: 30px 0;">
+                                    <div className="logo1" style="
+                                                        width: 20px;
+                                                        height: 40px;
+                                                        border: 1px solid #ff6400;
+                                                        border-radius: 10px 0 10px 0;
+                                                    ">
+                                        <div></div>
+                                        <div></div>
+                                    </div>
+                                    <div style="
+                                                        width: 20px;
+                                                        height: 40px;
+                                                        border: 1px solid #ff6400;
+                                                        border-radius: 0px 10px 0px 10px;
+                                                    
+                                                    ">
+                                        <div style=" border-bottom: 1px solid #ff6400;
+                                                        height: 5px;
+                                                        margin-bottom: 5px;
+                                                        width: 100%;
+                                                        "></div>
+                                        <div style=" border-bottom: 1px solid #ff6400;
+                                                        height: 5px;
+                                                        margin-bottom: 5px;
+                                                        width: 100%;
+                                                        "></div>
+                                        <div style=" border-bottom: 1px solid #ff6400;
+                                                        height: 5px;
+                                                        margin-bottom: 5px;
+                                                        width: 100%;
+                                                        "></div>
+                                        <div style=" border-bottom: 1px solid #ff6400;
+                                                        height: 5px;
+                                                        margin-bottom: 5px;
+                                                        width: 100%;
+                                                        "></div>
+                                    </div>
+                        
+                                </div>
+                            </div>
+                            <p style="text-align: center; font-family: sans-serif;">Your OTP code is </p>
+                            <h1 style="color:#ff6400; text-align: center; padding:10px 0;">
+                                <span>${req.body.otp}</span>
+                            </h1>
+                        `
                         }
                         transporter.sendMail(mailOptions, (err, result) => {
                             if (err) {
@@ -76,20 +119,62 @@ const signIn = (req, res) => {
                                 var transporter = nodemailer.createTransport({
                                     service: 'gmail',
                                     auth: {
-                                        user: 'emeeylanr04@gmail.com',
+                                        user: 'skuledman@gmail.com',
                                         pass: process.env.appPass,
                                     }
                                 })
                                 var mailOptions = {
                                     from: 'Ec',
                                     to: `${req.body.schoolEmail}`,
-                                    subject: "Eduman",
+                                    subject: "Skuledman Verification",
                                     text: '',
-                                    html: `<h1 style="text-align: center;color:#ff6400;">Eduman</h1>
-                                    <p style="text-align: center;">Your OTP code is </p>
-                                     <h1 style="color:#ff6400; text-align: center; padding:10px 0;">
-                                   <span>${req.body.otp}</span>
-                                     </h1>`
+                                    html: `  <h1 style="text-align: center;color:#ff6400;">Eduman</h1>
+                                    <div style="display:flex; justify-content:center;">
+                                        <div style="display: flex; padding: 30px 0;">
+                                            <div className="logo1" style="
+                                                                width: 20px;
+                                                                height: 40px;
+                                                                border: 1px solid #ff6400;
+                                                                border-radius: 10px 0 10px 0;
+                                                            ">
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                            <div style="
+                                                                width: 20px;
+                                                                height: 40px;
+                                                                border: 1px solid #ff6400;
+                                                                border-radius: 0px 10px 0px 10px;
+                                                            
+                                                            ">
+                                                <div style=" border-bottom: 1px solid #ff6400;
+                                                                height: 5px;
+                                                                margin-bottom: 5px;
+                                                                width: 100%;
+                                                                "></div>
+                                                <div style=" border-bottom: 1px solid #ff6400;
+                                                                height: 5px;
+                                                                margin-bottom: 5px;
+                                                                width: 100%;
+                                                                "></div>
+                                                <div style=" border-bottom: 1px solid #ff6400;
+                                                                height: 5px;
+                                                                margin-bottom: 5px;
+                                                                width: 100%;
+                                                                "></div>
+                                                <div style=" border-bottom: 1px solid #ff6400;
+                                                                height: 5px;
+                                                                margin-bottom: 5px;
+                                                                width: 100%;
+                                                                "></div>
+                                            </div>
+                                
+                                        </div>
+                                    </div>
+                                    <p style="text-align: center; font-family: sans-serif;">Your OTP code is </p>
+                                    <h1 style="color:#ff6400; text-align: center; padding:10px 0;">
+                                        <span>${req.body.otp}</span>
+                                    </h1>`
                                 }
                                 transporter.sendMail(mailOptions, (err, result) => {
                                     if (err) {
@@ -166,20 +251,62 @@ const resendOtp = (req, res) => {
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'emeeylanr04@gmail.com',
+            user: 'skuledman@gmail.com',
             pass: process.env.appPass,
         }
     })
     var mailOptions = {
-        from: 'Ec',
+        from: 'Skuledman',
         to: `${req.body.schoolEmail}`,
-        subject: "Eduman",
+        subject: "Skuledman Email Verification",
         text: '',
-        html: `<h1 style="text-align: center;color:#ff6400;">Eduman</h1>
-                <p style="text-align: center;">Your OTP code is </p>
-                 <h1 style="color:#ff6400; text-align: center; padding:10px 0;">
-               <span>${req.body.otp}</span>
-                 </h1>`
+        html: ` <h1 style="text-align: center;color:#ff6400;">Eduman</h1>
+        <div style="display:flex; justify-content:center;">
+            <div style="display: flex; padding: 30px 0;">
+                <div className="logo1" style="
+                                    width: 20px;
+                                    height: 40px;
+                                    border: 1px solid #ff6400;
+                                    border-radius: 10px 0 10px 0;
+                                ">
+                    <div></div>
+                    <div></div>
+                </div>
+                <div style="
+                                    width: 20px;
+                                    height: 40px;
+                                    border: 1px solid #ff6400;
+                                    border-radius: 0px 10px 0px 10px;
+                                
+                                ">
+                    <div style=" border-bottom: 1px solid #ff6400;
+                                    height: 5px;
+                                    margin-bottom: 5px;
+                                    width: 100%;
+                                    "></div>
+                    <div style=" border-bottom: 1px solid #ff6400;
+                                    height: 5px;
+                                    margin-bottom: 5px;
+                                    width: 100%;
+                                    "></div>
+                    <div style=" border-bottom: 1px solid #ff6400;
+                                    height: 5px;
+                                    margin-bottom: 5px;
+                                    width: 100%;
+                                    "></div>
+                    <div style=" border-bottom: 1px solid #ff6400;
+                                    height: 5px;
+                                    margin-bottom: 5px;
+                                    width: 100%;
+                                    "></div>
+                </div>
+    
+            </div>
+        </div>
+        <p style="text-align: center; font-family: sans-serif;">Your OTP code is </p>
+        <h1 style="color:#ff6400; text-align: center; padding:10px 0;">
+            <span>${req.body.otp}</span>
+        </h1>`
     }
     transporter.sendMail(mailOptions, (err, result) => {
         if (err) {
