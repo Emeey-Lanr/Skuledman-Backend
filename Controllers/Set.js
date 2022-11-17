@@ -83,45 +83,96 @@ const getCurrentSet = (req, res) => {
             if (resultFound.class === "Jss1") {
                 studentModel.find({ jss1Id: resultFound._id }, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ status: false, message: "an error occured" })
                     } else {
-                        console.log(result)
                         firstTermStudent = result.filter((student, id) => student.jss1.firstTermStatus === true)
                         secondTermStudent = result.filter((student, id) => student.jss1.secondTermStatus === true)
                         thirdTermStudent = result.filter((student, id) => student.jss1.thirdTermStatus === true)
+
                         totalSchoolFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.schoolFees)
                         totalSchoolFeesForSecondTerm = Number(secondTermStudent.length) * Number(resultFound.secondTerm.schoolFees)
                         totalSchoolFeesForThirdTerm = Number(thirdTermStudent.length) * Number(resultFound.thirdTerm.schoolFees)
                         totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
                         totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
                         totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
+
                         //to check the total paid so far
                         if (firstTermStudent.length > 0) {
                             firstTermStudent.map((student, id) => {
-                                studentTotalFirstTermPaid += student.jss1.firstTermSchoolFees
-                                studentTotalFirstPtaFeePaid += student.jss1.firstTermPtaFees
+                                studentTotalFirstTermPaid += Number(student.jss1.firstTermSchoolFees)
+                                studentTotalFirstPtaFeePaid += Number(student.jss1.firstTermPtaFees)
                             })
                         }
                         if (secondTermStudent.length > 0) {
                             secondTermStudent.map((student, id) => {
-                                studentTotalSecondTermPaid += student.jss1.secondTermSchoolFees
-                                studentTotalSecondPtaFeePaid += student.jss1.secondTermPtaFees
+                                studentTotalSecondTermPaid += Number(student.jss1.secondTermSchoolFees)
+                                studentTotalSecondPtaFeePaid += Number(student.jss1.secondTermPtaFees)
                             })
                         }
                         if (thirdTermStudent.length > 0) {
                             thirdTermStudent.map((student, id) => {
-                                studentTotalthirTermPaid += student.jss1.secondTermSchoolFees
-                                studentTotalThirdPtaFeePaid += student.jss1.thirdTermPtaFees
+                                studentTotalthirTermPaid += Number(student.jss1.thirdTermSchoolFees)
+                                studentTotalThirdPtaFeePaid += Number(student.jss1.thirdTermPtaFees)
                             })
                         }
 
+                        ///school debt
+                        const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+                        const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+                        const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+                        ////Pta
+                        const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+                        const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+                        const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
+
+                        res.send({
+                            currentSet: resultFound,
+                            ///Total amount to  be paid school fee
+                            totalAmountToBePaidSchoolFeeFirstTerm: totalSchoolFeesForFirstTerm,
+                            totalAmountToBePaidSchoolFeeSecondTerm: totalSchoolFeesForSecondTerm,
+                            totalAmountToBePaidSchoolFeeThirsTerm: totalSchoolFeesForThirdTerm,
+
+                            ///Total Amount to be paid pta fee
+                            totalAmountToBePaidPtaFeeFirstTerm: totalPtaFeesForFirstTerm,
+                            totalAmountToBePaidPtaFeeSecondTerm: totalPtaFeesForSecondTerm,
+                            totalAmountToBePaidPtaFeeThirdTerm: totalPtaFeesForThirdTerm,
+
+                            ///School debt Fees
+                            firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
+                            secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                            thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                            ///SchoolFees Amount already paid
+                            studentSFirstTermPaid: studentTotalFirstTermPaid,
+                            studentSSecondTermPaid: studentTotalSecondTermPaid,
+                            studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                            ///Pta Fees
+                            firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
+                            secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                            thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+                            ////Pta Fee amount fee paid
+                            studentPFirstTermPaid: studentTotalFirstPtaFeePaid,
+                            studentPSecondTermPaid: studentTotalSecondPtaFeePaid,
+                            studentPThirdTermPaid: studentTotalThirdPtaFeePaid,
+
+
+
+                            ////Number of student
+                            firstnumberOfStudent: firstTermStudent.length,
+                            secondTotalNumberOfStudent: secondTermStudent.length,
+                            thirdTotalNumberOfStudent: thirdTermStudent.length,
+                            status: true
+                        })
 
                     }
                 })
             } else if (resultFound.class === "Jss2") {
                 studentModel.find({ jss2Id: resultFound._id }, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ status: false, message: "an error occured" })
                     } else {
                         if (result !== null) {
                             firstTermStudent = result.filter((student, id) => student.jss2.firstTermStatus === true)
@@ -134,23 +185,73 @@ const getCurrentSet = (req, res) => {
                             totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
                             totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
                             if (firstTermStudent.length > 0) {
-                                firstTermStudent.map((student, id) => {
-                                    studentTotalFirstTermPaid += student.jss2.firstTermSchoolFees
-                                    studentTotalFirstPtaFeePaid += student.jss2.firstTermPtaFees
-                                })
+                                firstTermStudent.map
+                                    ((student, id) => {
+                                        studentTotalFirstTermPaid += Number(student.jss2.firstTermSchoolFees)
+                                        studentTotalFirstPtaFeePaid += Number(student.jss2.firstTermPtaFees)
+                                    })
                             }
                             if (secondTermStudent.length > 0) {
                                 secondTermStudent.map((student, id) => {
-                                    studentTotalSecondTermPaid += student.jss2.secondTermSchoolFees
-                                    studentTotalSecondPtaFeePaid += student.jss2.secondTermPtaFees
+                                    studentTotalSecondTermPaid += Number(student.jss2.secondTermSchoolFees)
+                                    studentTotalSecondPtaFeePaid += Number(student.jss2.secondTermPtaFees)
                                 })
                             }
                             if (thirdTermStudent.length > 0) {
                                 thirdTermStudent.map((student, id) => {
-                                    studentTotalthirTermPaid += student.jss2.secondTermSchoolFees
-                                    studentTotalThirdPtaFeePaid += student.jss2.thirdTermPtaFees
+                                    studentTotalthirTermPaid += Number(student.jss2.thirdTermSchoolFees)
+                                    studentTotalThirdPtaFeePaid += Number(student.jss2.thirdTermPtaFees)
                                 })
                             }
+                            ///school debt
+                            const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+                            const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+                            const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+                            ////Pta
+                            const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+                            const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+                            const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
+                            res.send({
+                                currentSet: resultFound,
+                                ///Total amount to  be paid school fee
+                                totalAmountToBePaidSchoolFeeFirstTerm: totalSchoolFeesForFirstTerm,
+                                totalAmountToBePaidSchoolFeeSecondTerm: totalSchoolFeesForSecondTerm,
+                                totalAmountToBePaidSchoolFeeThirsTerm: totalSchoolFeesForThirdTerm,
+
+                                ///Total Amount to be paid pta fee
+                                totalAmountToBePaidPtaFeeFirstTerm: totalPtaFeesForFirstTerm,
+                                totalAmountToBePaidPtaFeeSecondTerm: totalPtaFeesForSecondTerm,
+                                totalAmountToBePaidPtaFeeThirdTerm: totalPtaFeesForThirdTerm,
+
+                                ///School debt Fees
+                                firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
+                                secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                                thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                                ///SchoolFees Amount already paid
+                                studentSFirstTermPaid: studentTotalFirstTermPaid,
+                                studentSSecondTermPaid: studentTotalSecondTermPaid,
+                                studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                                ///Pta Fees
+                                firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
+                                secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                                thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+                                ////Pta Fee amount fee paid
+                                studentPFirstTermPaid: studentTotalFirstPtaFeePaid,
+                                studentPSecondTermPaid: studentTotalSecondPtaFeePaid,
+                                studentPThirdTermPaid: studentTotalThirdPtaFeePaid,
+
+
+
+                                ////Number of student
+                                firstnumberOfStudent: firstTermStudent.length,
+                                secondTotalNumberOfStudent: secondTermStudent.length,
+                                thirdTotalNumberOfStudent: thirdTermStudent.length,
+                                status: true
+                            })
                         }
 
                     }
@@ -159,7 +260,7 @@ const getCurrentSet = (req, res) => {
             } else if (resultFound.class === "Jss3") {
                 studentModel.find({ jss3Id: resultFound._id }, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ status: false, message: "an error occured" })
                     } else {
                         firstTermStudent = result.filter((student, id) => student.jss3.firstTermStatus === true)
                         secondTermStudent = result.filter((student, id) => student.jss3.secondTermStatus === true)
@@ -172,22 +273,71 @@ const getCurrentSet = (req, res) => {
                         totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
                         if (firstTermStudent.length > 0) {
                             firstTermStudent.map((student, id) => {
-                                studentTotalFirstTermPaid += student.jss3.firstTermSchoolFees
-                                studentTotalFirstPtaFeePaid += student.jss3.firstTermPtaFees
+                                studentTotalFirstTermPaid += Number(student.jss3.firstTermSchoolFees)
+                                studentTotalFirstPtaFeePaid += Number(student.jss3.firstTermPtaFees)
                             })
                         }
                         if (secondTermStudent.length > 0) {
                             secondTermStudent.map((student, id) => {
-                                studentTotalSecondTermPaid += student.jss3.secondTermSchoolFees
-                                studentTotalSecondPtaFeePaid += student.jss3.secondTermPtaFees
+                                studentTotalSecondTermPaid += Number(student.jss3.secondTermSchoolFees)
+                                studentTotalSecondPtaFeePaid += Number(student.jss3.secondTermPtaFees)
                             })
                         }
                         if (thirdTermStudent.length > 0) {
                             thirdTermStudent.map((student, id) => {
-                                studentTotalthirTermPaid += student.jss3.secondTermSchoolFees
-                                studentTotalThirdPtaFeePaid += student.jss3.thirdTermPtaFees
+                                studentTotalthirTermPaid += Number(student.jss3.thirdTermSchoolFees)
+                                studentTotalThirdPtaFeePaid += Number(student.jss3.thirdTermPtaFees)
                             })
                         }
+                        ///school debt
+                        const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+                        const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+                        const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+                        ////Pta
+                        const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+                        const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+                        const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
+                        res.send({
+                            currentSet: resultFound,
+                            ///Total amount to  be paid school fee
+                            totalAmountToBePaidSchoolFeeFirstTerm: totalSchoolFeesForFirstTerm,
+                            totalAmountToBePaidSchoolFeeSecondTerm: totalSchoolFeesForSecondTerm,
+                            totalAmountToBePaidSchoolFeeThirsTerm: totalSchoolFeesForThirdTerm,
+
+                            ///Total Amount to be paid pta fee
+                            totalAmountToBePaidPtaFeeFirstTerm: totalPtaFeesForFirstTerm,
+                            totalAmountToBePaidPtaFeeSecondTerm: totalPtaFeesForSecondTerm,
+                            totalAmountToBePaidPtaFeeThirdTerm: totalPtaFeesForThirdTerm,
+
+                            ///School debt Fees
+                            firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
+                            secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                            thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                            ///SchoolFees Amount already paid
+                            studentSFirstTermPaid: studentTotalFirstTermPaid,
+                            studentSSecondTermPaid: studentTotalSecondTermPaid,
+                            studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                            ///Pta Fees
+                            firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
+                            secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                            thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+                            ////Pta Fee amount fee paid
+                            studentPFirstTermPaid: studentTotalFirstPtaFeePaid,
+                            studentPSecondTermPaid: studentTotalSecondPtaFeePaid,
+                            studentPThirdTermPaid: studentTotalThirdPtaFeePaid,
+
+
+
+                            ////Number of student
+                            firstnumberOfStudent: firstTermStudent.length,
+                            secondTotalNumberOfStudent: secondTermStudent.length,
+                            thirdTotalNumberOfStudent: thirdTermStudent.length,
+                            status: true
+                        })
                     }
                 })
 
@@ -195,7 +345,7 @@ const getCurrentSet = (req, res) => {
             } else if (resultFound.class === "Sss1") {
                 studentModel.find({ sss1Id: resultFound._id }, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ status: false, message: "an error occured" })
                     } else {
                         firstTermStudent = result.filter((student, id) => student.sss1.firstTermStatus === true)
                         secondTermStudent = result.filter((student, id) => student.sss1.secondTermStatus === true)
@@ -208,22 +358,71 @@ const getCurrentSet = (req, res) => {
                         totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
                         if (firstTermStudent.length > 0) {
                             firstTermStudent.map((student, id) => {
-                                studentTotalFirstTermPaid += student.sss1.firstTermSchoolFees
-                                studentTotalFirstPtaFeePaid += student.sss1.firstTermPtaFees
+                                studentTotalFirstTermPaid += Number(student.sss1.firstTermSchoolFees)
+                                studentTotalFirstPtaFeePaid += Number(student.sss1.firstTermPtaFees)
                             })
                         }
                         if (secondTermStudent.length > 0) {
                             secondTermStudent.map((student, id) => {
-                                studentTotalSecondTermPaid += student.sss1.secondTermSchoolFees
-                                studentTotalSecondPtaFeePaid += student.sss1.secondTermPtaFees
+                                studentTotalSecondTermPaid += Number(student.sss1.secondTermSchoolFees)
+                                studentTotalSecondPtaFeePaid += Number(student.sss1.secondTermPtaFees)
                             })
                         }
                         if (thirdTermStudent.length > 0) {
                             thirdTermStudent.map((student, id) => {
-                                studentTotalthirTermPaid += student.sss1.secondTermSchoolFees
-                                studentTotalThirdPtaFeePaid += student.sss1.thirdTermPtaFees
+                                studentTotalthirTermPaid += Number(student.sss1.thirdTermSchoolFees)
+                                studentTotalThirdPtaFeePaid += Number(student.sss1.thirdTermPtaFees)
                             })
                         }
+                        ///school debt
+                        const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+                        const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+                        const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+                        ////Pta
+                        const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+                        const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+                        const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
+                        res.send({
+                            currentSet: resultFound,
+                            ///Total amount to  be paid school fee
+                            totalAmountToBePaidSchoolFeeFirstTerm: totalSchoolFeesForFirstTerm,
+                            totalAmountToBePaidSchoolFeeSecondTerm: totalSchoolFeesForSecondTerm,
+                            totalAmountToBePaidSchoolFeeThirsTerm: totalSchoolFeesForThirdTerm,
+
+                            ///Total Amount to be paid pta fee
+                            totalAmountToBePaidPtaFeeFirstTerm: totalPtaFeesForFirstTerm,
+                            totalAmountToBePaidPtaFeeSecondTerm: totalPtaFeesForSecondTerm,
+                            totalAmountToBePaidPtaFeeThirdTerm: totalPtaFeesForThirdTerm,
+
+                            ///School debt Fees
+                            firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
+                            secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                            thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                            ///SchoolFees Amount already paid
+                            studentSFirstTermPaid: studentTotalFirstTermPaid,
+                            studentSSecondTermPaid: studentTotalSecondTermPaid,
+                            studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                            ///Pta Fees
+                            firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
+                            secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                            thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+                            ////Pta Fee amount fee paid
+                            studentPFirstTermPaid: studentTotalFirstPtaFeePaid,
+                            studentPSecondTermPaid: studentTotalSecondPtaFeePaid,
+                            studentPThirdTermPaid: studentTotalThirdPtaFeePaid,
+
+
+
+                            ////Number of student
+                            firstnumberOfStudent: firstTermStudent.length,
+                            secondTotalNumberOfStudent: secondTermStudent.length,
+                            thirdTotalNumberOfStudent: thirdTermStudent.length,
+                            status: true
+                        })
                     }
 
                 })
@@ -232,7 +431,7 @@ const getCurrentSet = (req, res) => {
             } else if (resultFound.class === "Sss2") {
                 studentModel.find({ sss2Id: resultFound._id }, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ status: false, message: "an error occured" })
                     } else {
                         firstTermStudent = result.filter((student, id) => student.sss2.firstTermStatus === true)
                         secondTermStudent = result.filter((student, id) => student.sss2.secondTermStatus === true)
@@ -243,31 +442,83 @@ const getCurrentSet = (req, res) => {
                         totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
                         totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
                         totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
-                    }
-                    if (firstTermStudent.length > 0) {
-                        firstTermStudent.map((student, id) => {
-                            studentTotalFirstTermPaid += student.sss2.firstTermSchoolFees
-                            studentTotalFirstPtaFeePaid += student.sss2.firstTermPtaFees
+
+                        if (firstTermStudent.length > 0) {
+                            firstTermStudent.map((student, id) => {
+                                studentTotalFirstTermPaid += Number(student.sss2.firstTermSchoolFees)
+                                studentTotalFirstPtaFeePaid += Number(student.sss2.firstTermPtaFees)
+                            })
+                        }
+                        if (secondTermStudent.length > 0) {
+                            secondTermStudent.map((student, id) => {
+                                studentTotalSecondTermPaid += Number(student.sss2.secondTermSchoolFees)
+                                studentTotalSecondPtaFeePaid += Number(student.sss2.secondTermPtaFees)
+                            })
+                        }
+                        if (thirdTermStudent.length > 0) {
+                            thirdTermStudent.map((student, id) => {
+                                studentTotalthirTermPaid += Number(student.sss2.thirdTermSchoolFees)
+                                studentTotalThirdPtaFeePaid += Number(student.sss2.thirdTermPtaFees)
+                            })
+                        }
+
+                        ///school debt
+                        const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+                        const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+                        const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+                        ////Pta
+                        const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+                        const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+                        const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
+                        res.send({
+                            currentSet: resultFound,
+                            ///Total amount to  be paid school fee
+                            totalAmountToBePaidSchoolFeeFirstTerm: totalSchoolFeesForFirstTerm,
+                            totalAmountToBePaidSchoolFeeSecondTerm: totalSchoolFeesForSecondTerm,
+                            totalAmountToBePaidSchoolFeeThirsTerm: totalSchoolFeesForThirdTerm,
+
+                            ///Total Amount to be paid pta fee
+                            totalAmountToBePaidPtaFeeFirstTerm: totalPtaFeesForFirstTerm,
+                            totalAmountToBePaidPtaFeeSecondTerm: totalPtaFeesForSecondTerm,
+                            totalAmountToBePaidPtaFeeThirdTerm: totalPtaFeesForThirdTerm,
+
+                            ///School debt Fees
+                            firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
+                            secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                            thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                            ///SchoolFees Amount already paid
+                            studentSFirstTermPaid: studentTotalFirstTermPaid,
+                            studentSSecondTermPaid: studentTotalSecondTermPaid,
+                            studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                            ///Pta Fees
+                            firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
+                            secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                            thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+                            ////Pta Fee amount fee paid
+                            studentPFirstTermPaid: studentTotalFirstPtaFeePaid,
+                            studentPSecondTermPaid: studentTotalSecondPtaFeePaid,
+                            studentPThirdTermPaid: studentTotalThirdPtaFeePaid,
+
+
+
+                            ////Number of student
+                            firstnumberOfStudent: firstTermStudent.length,
+                            secondTotalNumberOfStudent: secondTermStudent.length,
+                            thirdTotalNumberOfStudent: thirdTermStudent.length,
+                            status: true
                         })
                     }
-                    if (secondTermStudent.length > 0) {
-                        secondTermStudent.map((student, id) => {
-                            studentTotalSecondTermPaid += student.sss2.secondTermSchoolFees
-                            studentTotalSecondPtaFeePaid += student.sss2.secondTermPtaFees
-                        })
-                    }
-                    if (thirdTermStudent.length > 0) {
-                        thirdTermStudent.map((student, id) => {
-                            studentTotalthirTermPaid += student.sss2.secondTermSchoolFees
-                            studentTotalThirdPtaFeePaid += student.sss2.thirdTermPtaFees
-                        })
-                    }
+
                 })
 
             } else if (resultFound.class === "Sss3") {
                 studentModel.find({ sss3Id: resultFound._id }, (err, result) => {
                     if (err) {
-                        console.log(err)
+                        res.send({ status: false, message: "an error occured" })
                     } else {
                         firstTermStudent = result.filter((student, id) => student.sss3.firstTermStatus === true)
                         secondTermStudent = result.filter((student, id) => student.sss3.secondTermStatus === true)
@@ -278,67 +529,97 @@ const getCurrentSet = (req, res) => {
                         totalPtaFeesForFirstTerm = Number(firstTermStudent.length) * Number(resultFound.firstTerm.ptaFees)
                         totalPtaFeesForSecondTerm = Number(firstTermStudent.length) * Number(resultFound.secondTerm.ptaFees)
                         totalPtaFeesForThirdTerm = Number(firstTermStudent.length) * Number(resultFound.thirdTerm.ptaFees)
-                    }
-                    if (firstTermStudent.length > 0) {
-                        firstTermStudent.map((student, id) => {
-                            studentTotalFirstTermPaid += student.sss3.firstTermSchoolFees
-                            studentTotalFirstPtaFeePaid += student.sss3.firstTermPtaFees
+
+                        if (firstTermStudent.length > 0) {
+                            firstTermStudent.map((student, id) => {
+                                studentTotalFirstTermPaid += Number(student.sss3.firstTermSchoolFees)
+                                studentTotalFirstPtaFeePaid += Number(student.sss3.firstTermPtaFees)
+                            })
+                        }
+                        if (secondTermStudent.length > 0) {
+                            secondTermStudent.map((student, id) => {
+                                studentTotalSecondTermPaid += Number(student.sss3.secondTermSchoolFees)
+                                studentTotalSecondPtaFeePaid += Number(student.sss3.secondTermPtaFees)
+                            })
+                        }
+                        if (thirdTermStudent.length > 0) {
+                            thirdTermStudent.map((student, id) => {
+                                studentTotalthirTermPaid += Number(student.sss3.thirdTermSchoolFees)
+                                studentTotalThirdPtaFeePaid += Number(student.sss2.thirdTermPtaFees)
+                            })
+                        }
+                        ///school debt
+                        const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
+                        const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
+                        const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
+                        ////Pta
+                        const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
+                        const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
+                        const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
+                        res.send({
+                            currentSet: resultFound,
+                            ///Total amount to  be paid school fee
+                            totalAmountToBePaidSchoolFeeFirstTerm: totalSchoolFeesForFirstTerm.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
+                            totalAmountToBePaidSchoolFeeSecondTerm: totalSchoolFeesForSecondTerm,
+                            totalAmountToBePaidSchoolFeeThirsTerm: totalSchoolFeesForThirdTerm,
+
+                            ///Total Amount to be paid pta fee
+                            totalAmountToBePaidPtaFeeFirstTerm: totalPtaFeesForFirstTerm.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
+                            totalAmountToBePaidPtaFeeSecondTerm: totalPtaFeesForSecondTerm,
+                            totalAmountToBePaidPtaFeeThirdTerm: totalPtaFeesForThirdTerm,
+
+                            ///School debt Fees
+                            firsTermDebtOwned: debtOwnedFirstTermSchoolFees.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
+                            secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
+                            thirdTermDebt: debtOwnedThirdTermSchoolFees,
+
+                            ///SchoolFees Amount already paid
+                            studentSFirstTermPaid: studentTotalFirstTermPaid.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
+                            studentSSecondTermPaid: studentTotalSecondTermPaid,
+                            studentSThirdTermPaid: studentTotalthirTermPaid,
+
+
+                            ///Pta Fees
+                            firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
+                            secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
+                            thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
+
+                            ////Pta Fee amount fee paid
+                            studentPFirstTermPaid: studentTotalFirstPtaFeePaid.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,'),
+                            studentPSecondTermPaid: studentTotalSecondPtaFeePaid,
+                            studentPThirdTermPaid: studentTotalThirdPtaFeePaid,
+
+
+
+                            ////Number of student
+                            firstnumberOfStudent: firstTermStudent.length,
+                            secondTotalNumberOfStudent: secondTermStudent.length,
+                            thirdTotalNumberOfStudent: thirdTermStudent.length,
+                            status: true
                         })
                     }
-                    if (secondTermStudent.length > 0) {
-                        secondTermStudent.map((student, id) => {
-                            studentTotalSecondTermPaid += student.sss3.secondTermSchoolFees
-                            studentTotalSecondPtaFeePaid += student.sss3.secondTermPtaFees
-                        })
-                    }
-                    if (thirdTermStudent.length > 0) {
-                        thirdTermStudent.map((student, id) => {
-                            studentTotalthirTermPaid += student.sss3.secondTermSchoolFees
-                            studentTotalThirdPtaFeePaid += student.sss2.thirdTermPtaFees
-                        })
-                    }
+
 
                 })
 
             }
-            ///School Feee
-            const debtOwnedFirstTermSchoolFees = totalSchoolFeesForFirstTerm - studentTotalFirstTermPaid
-            const debtOwnedSecondTermSchoolFees = totalSchoolFeesForSecondTerm - studentTotalSecondTermPaid
-            const debtOwnedThirdTermSchoolFees = totalSchoolFeesForThirdTerm - studentTotalthirTermPaid
-            ////Pta
-            const debtOwnedFirstTermPtaFees = totalPtaFeesForFirstTerm - studentTotalFirstPtaFeePaid
-            const debtOwnedSecondTermPtaFees = totalPtaFeesForSecondTerm - studentTotalSecondPtaFeePaid
-            const debtOwnedThirdTermPtaFees = totalPtaFeesForThirdTerm - studentTotalThirdPtaFeePaid
-
-
-            res.send({
-                currentSet: resultFound,
-                ///School debt Fees
-                firsTermDebtOwned: debtOwnedFirstTermSchoolFees,
-                secondTermDebtOwned: debtOwnedSecondTermSchoolFees,
-                thirdTermDebt: debtOwnedThirdTermSchoolFees,
-
-                ///SchoolFees Amount already paid
-                studentSFirstTermPaid: studentTotalFirstTermPaid,
-                studentSSecondTermPaid: studentTotalSecondTermPaid,
-                studentSThirdTermPaid: studentTotalthirTermPaid,
-
-
-                ///Pta Fees
-                firstTermDebtOwnedPta: debtOwnedFirstTermPtaFees,
-                secondTermDebtOwnedPta: debtOwnedSecondTermPtaFees,
-                thirdTermDebtOwnedPta: debtOwnedThirdTermPtaFees,
 
 
 
-                ////Number of student
-                firstnumberOfStudent: firstTermStudent,
-                secondTotalNumberOfStudent: secondTermStudent,
-                thirdTotalNumberOfStudent: thirdTermStudent,
-                status: true
-            })
+
         }
 
+    })
+}
+
+const deleteSet = (req, res) => {
+    const infoComing = req.body.info.split(",")
+    setSchemaModel.findOneAndDelete({ _id: infoComing[0] }, (err, result) => {
+        if (err) {
+            res.send({ message: "unable to delete", status: false })
+        } else {
+            res.send({ message: "deleted", status: true })
+        }
     })
 }
 
@@ -404,7 +685,7 @@ const createFeeList = (req, res) => {
 
     setSchemaModel.findOne({ _id: req.body.setInfo["setid"] }, (err, result) => {
         if (err) {
-            console.log(err)
+            res.send({ status: false, message: "an error occured" })
         } else {
             if (result !== null) {
                 if (req.body.setInfo["currentTerm"] === "firstTerm") {
@@ -466,6 +747,7 @@ module.exports = {
     saveSet,
     getSet,
     getCurrentSet,
+    deleteSet,
     updatePTAFeeAndSchoolFees,
     createFeeList,
     delPriceList

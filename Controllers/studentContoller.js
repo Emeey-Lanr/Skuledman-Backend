@@ -500,7 +500,7 @@ let errrorMessage = "an error occured"
 const trueStatus = true
 const falseStatus = false
 const addSubject = (req, res) => {
-
+    let check = []
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
             res.send({ message: errrorMessage, status: falseStatus })
@@ -508,174 +508,264 @@ const addSubject = (req, res) => {
             if (result !== null) {
                 if (req.body.class === "Jss1") {
                     if (req.body.term === 1) {
-                        result.jss1.firstTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss1.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss1.firstTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     } else if (req.body.term === 2) {
-                        result.jss1.secondTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss1.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss1.secondTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     } else if (req.body.term === 3) {
-                        result.jss1.thirdTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss1.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss1.thirdTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     }
                 } else if (req.body.class === "Jss2") {
+
                     if (req.body.term === 1) {
-                        result.jss2.firstTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss2.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss2.firstTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     } else if (req.body.term === 2) {
-                        result.jss2.secondTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss2.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss2.secondTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     } else if (req.body.term === 3) {
-                        result.jss2.thirdTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss2.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss2.thirdTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     }
                 } else if (req.body.class === "Jss3") {
                     if (req.body.term === 1) {
-                        result.jss3.firstTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss3.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss3.firstTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     } else if (req.body.term === 2) {
-                        result.jss3.secondTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss3.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss3.secondTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     } else if (req.body.term === 3) {
-                        result.jss3.thirdTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.jss3.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss3.thirdTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     }
                 } else if (req.body.class === "Sss1") {
                     if (req.body.term === 1) {
-                        result.sss1.firstTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss1.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss1.firstTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     } else if (req.body.term === 2) {
-                        result.sss1.secondTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss1.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss1.secondTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     } else if (req.body.term === 3) {
-                        result.sss1.thirdTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss1.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss1.thirdTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     }
                 } else if (req.body.class === "Sss2") {
                     if (req.body.term === 1) {
-                        result.sss2.firstTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss2.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss2.firstTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     } else if (req.body.term === 2) {
-                        result.sss2.secondTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss2.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss2.secondTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     } else if (req.body.term === 3) {
-                        result.sss2.thirdTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
-
+                        check = result.sss2.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss2.thirdTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     }
                 } else if (req.body.class === "Sss3") {
                     if (req.body.term === 1) {
-                        result.sss3.firstTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss3.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss3.firstTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
                     } else if (req.body.term === 2) {
-                        result.sss3.secondTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss3.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss3.secondTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     } else if (req.body.term === 3) {
-                        result.sss3.thirdTermResult.push(
-                            {
-                                subject: req.body.subjectName,
-                                totalScore: 0,
-                                resultNameXResultScore: []
-                            }
-                        )
+                        check = result.sss3.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss3.thirdTermResult.push(
+                                {
+                                    subject: req.body.subjectName,
+                                    totalScore: 0,
+                                    resultNameXResultScore: []
+                                }
+                            )
+                        }
 
                     }
                 }
-                console.log(result, "yess")
+
                 studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
                     if (err) {
                         res.send({ message: "an error occured while adding subject", status: false })
@@ -690,7 +780,7 @@ const addSubject = (req, res) => {
 }
 
 const addValue = (req, res) => {
-    const totalScoreUpdate = 0
+    let totalScoreUpdate = 0
     studentModel.findById({ _id: req.body.userInfo.studentId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured", status: false })
@@ -699,11 +789,13 @@ const addValue = (req, res) => {
             if (result !== null) {
                 if (req.body.userInfo.class === "Jss1") {
                     if (req.body.userInfo.term === 1) {
+
+
                         result.jss1.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -715,7 +807,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -727,7 +819,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -740,7 +832,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -751,7 +843,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -762,7 +854,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -775,7 +867,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -786,7 +878,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -797,7 +889,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -810,7 +902,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -821,7 +913,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -832,7 +924,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -845,7 +937,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -856,7 +948,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -868,7 +960,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -881,7 +973,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -892,7 +984,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -904,7 +996,7 @@ const addValue = (req, res) => {
                             if (info.subject === req.body.subject) {
                                 info.resultNameXResultScore.push(req.body.subjectInfo)
                                 info.resultNameXResultScore.map((score, id) => {
-                                    totalScoreUpdate += score.valuePoint
+                                    totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
 
@@ -1028,13 +1120,21 @@ const deletingValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss1.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
+
+
                             }
                         })
                     } else if (req.body.term === 2) {
                         result.jss1.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1042,6 +1142,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss1.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1051,6 +1154,9 @@ const deletingValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss2.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1058,6 +1164,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.jss2.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1065,6 +1174,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss2.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1074,13 +1186,20 @@ const deletingValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss3.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
+
                         })
                     } else if (req.body.term === 2) {
                         result.jss3.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1088,6 +1207,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss3.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1097,6 +1219,9 @@ const deletingValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.sss1.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1104,13 +1229,20 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.sss1.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
+
                             }
                         })
                     } else if (req.body.term === 3) {
                         result.sss1.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1120,6 +1252,9 @@ const deletingValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.sss2.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1127,6 +1262,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.sss2.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1134,6 +1272,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.sss2.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1143,6 +1284,9 @@ const deletingValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.sss3.firstTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1150,6 +1294,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.sss3.secondTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1157,6 +1304,9 @@ const deletingValuePoint = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.sss3.thirdTermResult.map((info, id) => {
                             if (info.subject === req.body.currentSubject) {
+                                let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
+                                info.totalScore = Number(info.totalScore) - totalscore
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
                             }
@@ -1179,6 +1329,8 @@ const deletingValuePoint = (req, res) => {
 
 
 const EditSubject = (req, res) => {
+    let check = []
+    let status = false
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured" })
@@ -1186,39 +1338,262 @@ const EditSubject = (req, res) => {
             if (result !== null) {
                 if (req.body.studentClass === "Jss1") {
                     if (req.body.term === 1) {
-                        result.jss1.firstTermResult.map((subject, id) => {
-                            if (subject.subject === req.body.subject) {
-                                subject.subject = req.body.newSubject
-                            }
-                        })
+                        check = result.jss1.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            result.jss1.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                            status = true
+                        }
                     } else if (req.body.term === 2) {
-                        result.jss1.secondTermResult.map((subject, id) => {
-                            if (subject.subject === req.body.subject) {
-                                subject.subject = req.body.newSubject
-                            }
-                        })
+                        check = result.jss1.secondTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss1.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
                     } else if (req.body.term === 3) {
-                        result.jss1.thirdTermResult.map((subject, id) => {
-                            if (subject.subject === req.body.subject) {
-                                subject.subject = req.body.newSubject
-                            }
-                        })
+                        check = result.jss1.thirdTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss1.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    }
+                } else if (req.body.studentClass === "Jss2") {
+                    if (req.body.term === 1) {
+                        check = result.jss2.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss2.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        check = result.jss2.secondTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss2.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 3) {
+                        check = result.jss2.thirdTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss2.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    }
+                } else if (req.body.studentClass === "Jss3") {
+                    if (req.body.term === 1) {
+                        check = result.jss3.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss3.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        check = result.jss3.secondTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss3.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 3) {
+                        check = result.jss3.thirdTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.jss3.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    }
+                } else if (req.body.studentClass === "Sss1") {
+                    if (req.body.term === 1) {
+                        check = result.sss1.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                        } else {
+                            result.sss1.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        check = result.sss1.secondTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss1.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 3) {
+                        check = result.sss1.thirdTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss1.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    }
+                } else if (req.body.studentClass === "Sss2") {
+                    if (req.body.term === 1) {
+                        check = result.sss2.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss2.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        check = result.sss2.secondTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss2.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 3) {
+                        check = result.sss2.thirdTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.ss21.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    }
+                } else if (req.body.studentClass === "Sss3") {
+                    if (req.body.term === 1) {
+                        check = result.sss3.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss3.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        check = result.sss3.secondTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss3.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
+                    } else if (req.body.term === 3) {
+                        check = result.sss3.thirdTermResult.filter((info, id) => info.subject === req.body.newSubject)
+                        if (check.length > 0) {
+                            res.send({ message: "Subject name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss3.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.subject = req.body.newSubject
+                                }
+                            })
+                        }
                     }
                 }
-
-                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
-                    if (err) {
-                        res.send({ message: "an error occured updating subject", status: false })
-                    } else {
-                        res.send({ message: "updated succesfully", status: true })
-                    }
-                })
+                if (status) {
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured updating subject", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                }
             }
         }
     })
 }
 
 const editValuePointName = (req, res) => {
+    let check = []
+    let status = false
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured" })
@@ -1228,35 +1603,379 @@ const editValuePointName = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss1.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName === req.body.newSubject)
                             }
 
                         })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss1.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
                     } else if (req.body.term === 2) {
                         result.jss1.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName === req.body.newSubject)
                             }
 
                         })
+                        if (check.length > 0) {
+                            status = false
+                            res.send({ message: "value name already exist", status: false })
+                        } else {
+                            status = true
+                            result.jss1.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
 
                     } else if (req.body.term === 3) {
                         result.jss1.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName === req.body.newSubject)
                             }
 
                         })
+                        if (check.length > 0) {
+                            res.send({ message: "an value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss1.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+
+                    }
+                } else if (req.body.studentClass === "Jss2") {
+                    if (req.body.term === 1) {
+                        result.jss2.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss2.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        result.jss2.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss2.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    } else if (req.body.term === 3) {
+                        result.jss2.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss2.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+
+                    }
+                } else if (req.body.studentClass === "Jss3") {
+                    if (req.body.term === 1) {
+                        result.jss3.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            result.jss3.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        result.jss3.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss3.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    } else if (req.body.term === 3) {
+                        result.jss3.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.jss3.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+                    }
+                } else if (req.body.studentClass === "Sss1") {
+                    if (req.body.term === 1) {
+                        result.sss1.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss1.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        result.sss1.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss1.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    } else if (req.body.term === 3) {
+                        result.sss1.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss1.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    }
+                } else if (req.body.studentClass === "Sss2") {
+                    if (req.body.term === 1) {
+                        result.sss2.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss2.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        result.sss2.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss2.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    } else if (req.body.term === 3) {
+                        result.sss2.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss2.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    }
+                } else if (req.body.studentClass === "Sss3") {
+                    if (req.body.term === 1) {
+                        result.sss3.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss3.firstTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+                    } else if (req.body.term === 2) {
+                        result.sss3.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss3.secondTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
+
+                    } else if (req.body.term === 3) {
+                        result.sss3.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                            }
+
+                        })
+                        if (check.length > 0) {
+                            res.send({ message: "value name already exist", status: false })
+                            status = false
+                        } else {
+                            status = true
+                            result.sss3.thirdTermResult.map((subject, id) => {
+                                if (subject.subject === req.body.subject) {
+                                    subject.resultNameXResultScore[req.body.id].valueName = req.body.newSubject
+                                }
+
+                            })
+                        }
 
                     }
                 }
-                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
-                    if (err) {
-                        res.send({ message: "an error occured updating subject", status: false })
-                    } else {
-                        res.send({ message: "updated succesfully", status: true })
-                    }
-                })
+                if (status) {
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured updating subject", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                }
             }
         }
     })
@@ -1272,13 +1991,22 @@ const editValuePoint = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss1.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
                             }
 
                         })
                     } else if (req.body.term === 2) {
                         result.jss1.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
                             }
 
@@ -1287,6 +2015,200 @@ const editValuePoint = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss1.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    }
+                } else if (req.body.studentClass === "Jss2") {
+                    if (req.body.term === 1) {
+                        result.jss2.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.jss2.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.jss2.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    }
+                } else if (req.body.studentClass === "Jss3") {
+                    if (req.body.term === 1) {
+                        result.jss3.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.jss3.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.jss3.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    }
+                } else if (req.body.studentClass === "Sss1") {
+                    if (req.body.term === 1) {
+                        result.sss1.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.sss1.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.sss1.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    }
+                } else if (req.body.studentClass === "Sss2") {
+                    if (req.body.term === 1) {
+                        result.sss2.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.sss2.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.sss2.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    }
+                } else if (req.body.studentClass === "Sss3") {
+                    if (req.body.term === 1) {
+                        result.sss3.firstTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                            }
+
+                        })
+                    } else if (req.body.term === 2) {
+                        result.sss3.secondTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
+                                subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                            }
+
+                        })
+
+                    } else if (req.body.term === 3) {
+                        result.sss3.thirdTermResult.map((subject, id) => {
+                            if (subject.subject === req.body.subject) {
+                                const fomerscoreMinus = subject.resultNameXResultScore[req.body.id].valuePoint
+                                subject.totalScore = Number(subject.totalScore) - Number(fomerscoreMinus)
+                                subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
+
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
                             }
 
@@ -1301,6 +2223,8 @@ const editValuePoint = (req, res) => {
                         res.send({ message: "updated succesfully", status: true })
                     }
                 })
+            } else {
+                res.send({ message: "an error occured finding", status: false })
             }
         }
     })

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const schoolModel = require("../Models/schoolModel")
+const setSchemaModel = require("../Models/set")
 const jwt = require("jsonwebtoken")
 const nodemailer = require("nodemailer")
 
@@ -330,9 +331,13 @@ const edumanOtp = (req, res) => {
             schoolEmail = result.pass.split(",")[0]
             schoolModel.findOne({ _id: result.pass.split(",")[1] }, (err, result) => {
                 if (err) {
-                    res.send({ message: "couldn't find user, an error occured" })
+                    res.send({ message: "couldn't find user, an error occured", status: false })
                 } else {
-                    res.send({ status: true, schoolDetails: result },)
+
+                    res.send({ status: true, schoolDetails: result })
+
+
+
                 }
             })
 
