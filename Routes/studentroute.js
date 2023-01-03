@@ -17,8 +17,8 @@ const {
     deletingValuePoint,
     EditSubject,
     editValuePointName,
-    editValuePoint
-} = require("../Controllers/studentContoller")
+    editValuePoint,
+    deactivate } = require("../Controllers/studentContoller")
 
 route.post("/registerStudent", registerStudent)
 route.get("/searchStudentToAdd", searchStudentBelowSet)
@@ -37,6 +37,7 @@ route.patch("/deleteValuePoint", deletingValuePoint)
 route.patch("/editsubject", EditSubject)
 route.patch("/editvaluePointName", editValuePointName)
 route.patch("/editvaluepoint", editValuePoint)
+route.patch("/deactivate", deactivate)
 
 
 

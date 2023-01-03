@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs")
 const schoolSchema = mongoose.Schema({
     schoolEmail: { type: String, required: true, unique: true },
     schoolName: { type: String, required: true },
+    schoolImgUrl: { type: String },
     schoolAddress: { type: String, required: true },
     schoolPhoneNumber: { type: String, required: true },
     schoolPassword: { type: String, required: true },

@@ -67,7 +67,7 @@ const searchStudentBelowSet = (req, res) => {
                 })
                 res.send({ message: "seen user/s", result: studentDetails, status: true })
             } else {
-                res.send({ message: "couldn't find student", status: true })
+                res.send({ message: "couldn't find student", status: false })
             }
         }
     })
@@ -80,40 +80,112 @@ const addStudentToNewSet = (req, res) => {
         if (err) {
             res.send({ message: "an error occured", status: false })
         } else {
-            result.currentClass = req.body.currentClass
-            if (req.body.currentClass === "Jss1") {
-                result.jss1Id = req.body.setId
-                result.jss1.set = req.body.set
-                result.jss1.setId = req.body.setId
-            } else if (req.body.currentClass === "Jss2") {
-                result.jss2Id = req.body.setId
-                result.jss2.set = req.body.set
-                result.jss2.setId = req.body.setId
-            } else if (req.body.currentClass === "Jss3") {
-                result.jss3Id = req.body.setId
-                result.jss3.set = req.body.set
-                result.jss3.setId = req.body.setId
-            } else if (req.body.currentClass === "Sss1") {
-                result.sss1Id = req.body.setId
-                result.sss1.set = req.body.set
-                result.sss1.setId = req.body.setId
-            } else if (req.body.currentClass === "Sss2") {
-                result.sss2Id = req.body.setId
-                result.sss2.set = req.body.set
-                result.sss2.setId = req.body.setId
+            if (result !== null) {
+                if (req.body.currentClass === "Jss1") {
+                    result.currentClass = req.body.currentClass
+                    result.currentSet = req.body.currentSet
+                    result.jss1Id = req.body.setId
+                    result.jss1.set = req.body.set
+                    result.jss1.setId = req.body.setId
+                    studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error ocurred", status: false })
+                        } else {
+                            res.send({ message: "added succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.currentClass === "Jss2") {
+                    result.currentClass = req.body.currentClass
+                    result.currentSet = req.body.currentSet
+                    result.jss2Id = req.body.setId
+                    result.jss2.set = req.body.set
+                    result.jss2.setId = req.body.setId
+                    studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error ocurred", status: false })
+                        } else {
+                            res.send({ message: "added succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.currentClass === "Jss3") {
+                    result.currentClass = req.body.currentClass
+                    result.currentSet = req.body.currentSet
+                    result.jss3Id = req.body.setId
+                    result.jss3.setId = req.body.setId
 
-            } else if (req.body.currentClass === "Sss3") {
-                result.sss3Id = req.body.setId
-                result.sss3.set = req.body.set
-                result.sss3.setId = req.body.setId
-            }
-            studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
-                if (err) {
-                    res.send({ message: "an error ocurred", status: false })
-                } else {
-                    res.send({ message: "added succesfully", status: true })
+                    studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error ocurred", status: false })
+                        } else {
+                            res.send({ message: "added succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.currentClass === "Sss1") {
+                    result.currentClass = req.body.currentClass
+                    result.currentSet = req.body.currentSet
+                    result.sss1Id = req.body.setId
+                    result.sss1.set = req.body.set
+                    result.sss1.setId = req.body.setId
+                    if (req.body.classType === 1) {
+                        result.sss1.art = true
+                    } else if (req.body.classType === 2) {
+                        result.sss1.science = true
+                    } else if (req.body.classType === 3) {
+                        result.sss1.commercial = true
+                    }
+                    studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error ocurred", status: false })
+                        } else {
+                            res.send({ message: "added succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.currentClass === "Sss2") {
+                    if (req.body.classType === 1) {
+                        result.sss2.art = true
+                    } else if (req.body.classType === 2) {
+                        result.sss2.science = true
+                    } else if (req.body.classType === 3) {
+                        result.sss2.commercial = true
+                    }
+                    result.currentClass = req.body.currentClass
+                    result.currentSet = req.body.currentSet
+                    result.sss2Id = req.body.setId
+                    result.sss2.set = req.body.set
+                    result.sss2.setId = req.body.setId
+                    studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error ocurred", status: false })
+                        } else {
+                            res.send({ message: "added succesfully", status: true })
+                        }
+                    })
+
+                } else if (req.body.currentClass === "Sss3") {
+                    if (req.body.classType === 1) {
+                        result.sss3.art = true
+                    } else if (req.body.classType === 2) {
+                        result.sss3.science = true
+                    } else if (req.body.classType === 3) {
+                        result.sss3.commercial = true
+                    }
+                    result.currentClass = req.body.currentClass
+                    result.currentSet = req.body.currentSet
+                    result.sss3Id = req.body.setId
+                    result.sss3.set = req.body.set
+                    result.sss3.setId = req.body.setId
+                    studentModel.findOneAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error ocurred", status: false })
+                        } else {
+                            res.send({ message: "added succesfully", status: true })
+                        }
+                    })
                 }
-            })
+            } else {
+                res.send({ message: "an error occured,", status: false })
+            }
+
         }
     })
 }
@@ -189,7 +261,6 @@ const gettingTheCurrentStudent = (req, res) => {
             res.send({ message: "an error occured", status: false })
 
         } else {
-
             if (studentFound !== null) {
                 if (infoComing[2] === "Jss1") {
                     currentClassInfo = studentFound.jss1
@@ -209,6 +280,7 @@ const gettingTheCurrentStudent = (req, res) => {
                         res.send({ message: "an err occured", status: false })
                     } else {
                         if (result !== null) {
+
                             firstTermSchoolFee = result.firstTerm.schoolFees
                             secondTermSchoolFee = result.secondTerm.schoolFees
                             thirdTermSchoolFee = result.thirdTerm.schoolFees
@@ -223,6 +295,53 @@ const gettingTheCurrentStudent = (req, res) => {
                                 totalDebtSchoolFees = firstTermSchoolFee - currentClassInfo.firstTermSchoolFees
                                 //Pta
                                 totalPtaDebt = firstTermPtaFee - currentClassInfo.firstTermPtaFees
+                                if (result.class === "Jss1") {
+                                    if (studentFound.jss1.firstTermResult.length === 0) {
+                                        studentFound.jss1.firstTermResult = result.firstTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Jss2") {
+                                    if (studentFound.jss2.firstTermResult.length === 0) {
+                                        studentFound.jss2.firstTermResult = result.firstTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Jss3") {
+                                    if (studentFound.jss3.firstTermResult.length === 0) {
+                                        studentFound.jss3.firstTermResult = result.firstTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Sss1") {
+                                    console.log("yessss")
+                                    if (studentFound.sss1.firstTermResult.length === 0) {
+                                        console.log(studentFound.sss1.firstTermResult, studentFound.sss1.art, "++++++")
+                                        if (studentFound.sss1.science) {
+                                            studentFound.sss1.firstTermResult = result.firstTerm.scienceSubject
+                                        } else if (studentFound.sss1.art) {
+                                            studentFound.sss1.firstTermResult = result.firstTerm.artSubject
+                                        } else if (studentFound.sss1.commercial) {
+                                            studentFound.sss1.firstTermResult = result.firstTerm.commercialSubject
+                                        }
+                                    }
+                                    console.log(studentFound.sss1.firstTermResult, result.firstTerm.scienceSubject)
+                                } else if (result.class === "Sss2") {
+                                    if (studentFound.sss2.firstTermResult.length === 0) {
+                                        if (studentFound.sss2.science) {
+                                            studentFound.sss2.firstTermResult = result.firstTerm.scienceSubject
+                                        } else if (studentFound.sss2.art) {
+                                            studentFound.sss2.firstTermResult = result.firstTerm.artSubject
+                                        } else if (studentFound.sss2.commercial) {
+                                            studentFound.sss2.firstTermResult = result.firstTerm.commercialSubject
+                                        }
+                                    }
+                                } else if (result.class === "Sss3") {
+                                    if (studentFound.sss3.firstTermResult.length === 0) {
+                                        if (studentFound.sss3.science) {
+                                            studentFound.sss3.firstTermResult = result.firstTerm.scienceSubject
+                                        } else if (studentFound.sss3.art) {
+                                            studentFound.sss3.firstTermResult = result.firstTerm.artSubject
+                                        } else if (studentFound.sss3.commercial) {
+                                            studentFound.sss3.firstTermResult = result.firstTerm.commercialSubject
+                                        }
+                                    }
+                                }
+
                             } else if (currentClassInfo.firstTermStatus === true && currentClassInfo.secondTermStatus === true) {
                                 ///If he attend boths first Term and second term
                                 let secondTerm = firstTermSchoolFee + secondTermSchoolFee
@@ -233,6 +352,51 @@ const gettingTheCurrentStudent = (req, res) => {
                                 let studentTermPtaFees = currentClassInfo.firstTermPtaFees + currentClassInfo.secondTermPtaFees
                                 totalPtaDebt = ptasecondTerm - studentTermPtaFees
 
+                                // Adding subject
+                                if (result.class === "Jss1") {
+                                    if (studentFound.jss1.secondTermResult.length === 0) {
+                                        studentFound.jss1.secondTermResult = result.secondTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Jss2") {
+                                    if (studentFound.jss2.secondTermResult.length === 0) {
+                                        studentFound.jss2.secondTermResult = result.secondTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Jss3") {
+                                    if (studentFound.jss3.secondTermResult.length === 0) {
+                                        studentFound.jss3.secondTermResult = result.secondTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Sss1") {
+                                    if (studentFound.sss1.secondTermResult.length === 0) {
+                                        if (studentFound.sss1.science) {
+                                            studentFound.sss1.secondTermResult = result.secondTerm.scienceSubject
+                                        } else if (studentFound.sss1.art) {
+                                            studentFound.sss1.secondTermResult = result.secondTerm.artSubject
+                                        } else if (studentFound.sss1.commercial) {
+                                            studentFound.sss1.secondTermResult = result.secondTerm.commercialSubject
+                                        }
+                                    }
+                                } else if (result.class === "Sss2") {
+                                    if (studentFound.sss2.secondTermResult.length === 0) {
+                                        if (studentFound.sss2.science) {
+                                            studentFound.sss2.secondTermResult = result.secondTerm.scienceSubject
+                                        } else if (studentFound.sss2.art) {
+                                            studentFound.sss2.secondTermResult = result.secondTerm.artSubject
+                                        } else if (studentFound.sss2.commercial) {
+                                            studentFound.sss2.secondTermResult = result.secondTerm.commercialSubject
+                                        }
+                                    }
+                                } else if (result.class === "Sss3") {
+                                    if (studentFound.sss3.secondTermResult.length === 0) {
+                                        if (studentFound.sss3.science) {
+                                            studentFound.sss3.secondTermResult = result.secondTerm.scienceSubject
+                                        } else if (studentFound.sss3.art) {
+                                            studentFound.sss3.secondTermResult = result.secondTerm.artSubject
+                                        } else if (studentFound.sss3.commercial) {
+                                            studentFound.sss3.secondTermResult = result.secondTerm.commercialSubject
+                                        }
+                                    }
+                                }
+
                             } else if (currentClassInfo.firstTermStatus === true && currentClassInfo.secondTermStatus === true && currentClassInfo.thirdTermStatus === true) {
                                 ////if he attends both firstTerm, secondterm and third term
                                 let thirdTerm = firstTermSchoolFee + secondTermSchoolFee + thirdTermSchoolFee
@@ -242,24 +406,81 @@ const gettingTheCurrentStudent = (req, res) => {
                                 let ptasecondTerm = firstTermPtaFee + secondTermPtaFee + thirdTermPtaFee
                                 let studentTermPtaFees = currentClassInfo.firstTermPtaFees + currentClassInfo.secondTermPtaFees + currentClassInfo.thirdTermPtaFees
                                 totalPtaDebt = ptasecondTerm - studentTermPtaFees
-                            }
-                            res.send({
-                                message: "studentFound",
-                                status: true,
-                                totalInfo: studentFound,
-                                currentClassInfo: currentClassInfo,
-                                totalSchoolFeesDebtOwned: totalDebtSchoolFees,
-                                totalPtaDebt: totalPtaDebt,
-                                ///the schoolfees to be paid for the term
-                                setfirstTermSchoolFees: firstTermSchoolFee,
-                                setSecondTermSchoolFees: secondTermSchoolFee,
-                                setThirdTermSchoolFees: thirdTermSchoolFee,
-                                //Pta fee to paid this for the term
-                                setFirstTermPtaFee: firstTermPtaFee,
-                                setSecondTermPtaFee: secondTermPtaFee,
-                                setThirdTermPtaFee: thirdTermPtaFee
 
+                                if (result.class === "Jss1") {
+                                    if (studentFound.jss1.thirdTermResult.length === 0) {
+                                        studentFound.jss1.thirdTermResult = result.thirdTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Jss2") {
+                                    if (studentFound.jss2.thirdTermResult.length === 0) {
+                                        studentFound.jss2.thirdTermResult = result.thirdTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Jss3") {
+                                    if (studentFound.jss3.thirdTermResult.length === 0) {
+                                        studentFound.jss3.thirdTermResult = result.thirdTerm.juniorSubject
+                                    }
+                                } else if (result.class === "Sss1") {
+                                    if (studentFound.sss1.thirdTermResult.length === 0) {
+                                        if (studentFound.sss1.science) {
+                                            studentFound.sss1.thirdTermResult = result.thirdTerm.scienceSubject
+                                        } else if (studentFound.sss1.art) {
+                                            studentFound.sss1.thirdTermResult = result.thirdTerm.artSubject
+                                        } else if (studentFound.sss1.commercial) {
+                                            studentFound.sss1.thirdTermResult = result.thirdTerm.commercialSubject
+                                        }
+                                    }
+                                } else if (result.class === "Sss2") {
+                                    if (studentFound.sss2.thirdTermResult.length === 0) {
+                                        if (studentFound.sss2.science) {
+                                            studentFound.sss2.thirdTermResult = result.thirdTerm.scienceSubject
+                                        } else if (studentFound.sss2.art) {
+                                            studentFound.sss2.thirdTermResult = result.thirdTerm.artSubject
+                                        } else if (studentFound.sss2.commercial) {
+                                            studentFound.sss2.thirdTermResult = result.thirdTerm.commercialSubject
+                                        }
+                                    }
+                                } else if (result.class === "Sss3") {
+                                    if (studentFound.sss3.secondTermResult.length === 0) {
+                                        if (studentFound.sss3.science) {
+                                            studentFound.sss3.thirdTermResult = result.thirdTerm.scienceSubject
+                                        } else if (studentFound.sss3.art) {
+                                            studentFound.sss3.thirdTermResult = result.thirdTerm.artSubject
+                                        } else if (studentFound.sss3.commercial) {
+                                            studentFound.sss3.thirdTermResult = result.thirdTerm.commercialSubject
+                                        }
+                                    }
+                                }
+                            }
+                            studentModel.findByIdAndUpdate({ _id: infoComing[1] }, studentFound, (err) => {
+                                if (err) {
+                                    res.send({ message: "an error occured", status: false })
+                                } else {
+                                    console.log("updated succesfuuly")
+                                    res.send({
+                                        message: "studentFound",
+                                        status: true,
+                                        totalInfo: studentFound,
+                                        currentClassInfo: currentClassInfo,
+                                        totalSchoolFeesDebtOwned: totalDebtSchoolFees,
+                                        totalPtaDebt: totalPtaDebt,
+                                        ///the schoolfees to be paid for the term
+                                        setfirstTermSchoolFees: firstTermSchoolFee,
+                                        setSecondTermSchoolFees: secondTermSchoolFee,
+                                        setThirdTermSchoolFees: thirdTermSchoolFee,
+                                        //Pta fee to paid this for the term
+                                        setFirstTermPtaFee: firstTermPtaFee,
+                                        setSecondTermPtaFee: secondTermPtaFee,
+                                        setThirdTermPtaFee: thirdTermPtaFee,
+
+                                        gradingsystemFirstTerm: result.firstTerm.gradeSetting,
+                                        gradingsystemSecondTerm: result.secondTerm.gradeSetting,
+                                        gradingsystemThirdTerm: result.thirdTerm.gradeSetting,
+
+                                    })
+                                }
                             })
+
+
                         } else {
                             res.send({ message: "result is empty, an info removed", status: false })
                         }
@@ -482,15 +703,91 @@ const addPtaFee = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss1.thirdTermPtaFees = req.body.fee
                     }
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.class === "Jss2") {
+                    if (req.body.term === 1) {
+                        result.jss2.firstTermPtaFees = req.body.fee
+                    } else if (req.body.term === 2) {
+                        result.jss2.secondTermPtaFees = req.body.fee
+                    } else if (req.body.term === 3) {
+                        result.jss2.thirdTermPtaFees = req.body.fee
+                    }
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.class === "Jss3") {
+                    if (req.body.term === 1) {
+                        result.jss3.firstTermPtaFees = req.body.fee
+                    } else if (req.body.term === 2) {
+                        result.jss3.secondTermPtaFees = req.body.fee
+                    } else if (req.body.term === 3) {
+                        result.jss3.thirdTermPtaFees = req.body.fee
+                    }
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.class === "Sss1") {
+                    if (req.body.term === 1) {
+                        result.sss1.firstTermPtaFees = req.body.fee
+                    } else if (req.body.term === 2) {
+                        result.sss1.secondTermPtaFees = req.body.fee
+                    } else if (req.body.term === 3) {
+                        result.sss1.thirdTermPtaFees = req.body.fee
+                    }
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.class === "Sss2") {
+                    if (req.body.term === 1) {
+                        result.sss2.firstTermPtaFees = req.body.fee
+                    } else if (req.body.term === 2) {
+                        result.sss2.secondTermPtaFees = req.body.fee
+                    } else if (req.body.term === 3) {
+                        result.sss2.thirdTermPtaFees = req.body.fee
+                    }
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
+                } else if (req.body.class === "Sss3") {
+                    if (req.body.term === 1) {
+                        result.sss3.firstTermPtaFees = req.body.fee
+                    } else if (req.body.term === 2) {
+                        result.sss3.secondTermPtaFees = req.body.fee
+                    } else if (req.body.term === 3) {
+                        result.sss3.thirdTermPtaFees = req.body.fee
+                    }
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured", status: false })
+                        } else {
+                            res.send({ message: "updated succesfully", status: true })
+                        }
+                    })
                 }
 
-                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
-                    if (err) {
-                        res.send({ message: "an error occured", status: false })
-                    } else {
-                        res.send({ message: "updated succesfully", status: true })
-                    }
-                })
+
             }
         }
     })
@@ -500,59 +797,73 @@ let errrorMessage = "an error occured"
 const trueStatus = true
 const falseStatus = false
 const addSubject = (req, res) => {
-    let check = []
+
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
             res.send({ message: errrorMessage, status: falseStatus })
         } else {
             if (result !== null) {
+                let check = []
+                let status = false
                 if (req.body.class === "Jss1") {
                     if (req.body.term === 1) {
-                        check = result.jss1.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss1.firstTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss1.firstTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
                     } else if (req.body.term === 2) {
-                        check = result.jss1.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss1.secondTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss1.secondTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     } else if (req.body.term === 3) {
-                        check = result.jss1.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss1.thirdTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss1.thirdTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     }
                 } else if (req.body.class === "Jss2") {
 
                     if (req.body.term === 1) {
-                        check = result.jss2.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss2.firstTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
                         } else {
@@ -560,12 +871,14 @@ const addSubject = (req, res) => {
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
                         }
                     } else if (req.body.term === 2) {
-                        check = result.jss2.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss2.secondTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
                         } else {
@@ -573,207 +886,270 @@ const addSubject = (req, res) => {
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
                         }
 
                     } else if (req.body.term === 3) {
-                        check = result.jss2.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss2.thirdTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss2.thirdTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     }
                 } else if (req.body.class === "Jss3") {
                     if (req.body.term === 1) {
-                        check = result.jss3.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss3.firstTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss3.firstTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
                     } else if (req.body.term === 2) {
-                        check = result.jss3.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss3.secondTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss3.secondTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     } else if (req.body.term === 3) {
-                        check = result.jss3.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.jss3.thirdTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.jss3.thirdTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
+
                             )
+                            status = true
                         }
 
                     }
                 } else if (req.body.class === "Sss1") {
                     if (req.body.term === 1) {
-                        check = result.sss1.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss1.firstTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss1.firstTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
                     } else if (req.body.term === 2) {
-                        check = result.sss1.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss1.secondTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss1.secondTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     } else if (req.body.term === 3) {
-                        check = result.sss1.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss1.thirdTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss1.thirdTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     }
                 } else if (req.body.class === "Sss2") {
                     if (req.body.term === 1) {
-                        check = result.sss2.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss2.firstTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss2.firstTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
                     } else if (req.body.term === 2) {
-                        check = result.sss2.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss2.secondTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss2.secondTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     } else if (req.body.term === 3) {
-                        check = result.sss2.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss2.thirdTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss2.thirdTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
                     }
                 } else if (req.body.class === "Sss3") {
                     if (req.body.term === 1) {
-                        check = result.sss3.firstTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss3.firstTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss3.firstTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
                     } else if (req.body.term === 2) {
-                        check = result.sss3.secondTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss3.secondTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss3.secondTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
                         }
 
                     } else if (req.body.term === 3) {
-                        check = result.sss3.thirdTermResult.filter((info, id) => info.subject === req.body.subjectName)
+                        check = result.sss3.thirdTermResult.filter((info, id) => info.subject.toUpperCase() === req.body.subjectName.toUpperCase())
                         if (check.length > 0) {
                             res.send({ message: "Subject name already exist", status: false })
+                            status = false
                         } else {
                             result.sss3.thirdTermResult.push(
                                 {
                                     subject: req.body.subjectName,
                                     totalScore: 0,
+                                    grade: "",
+                                    gradeStatus: "",
                                     resultNameXResultScore: []
                                 }
                             )
+                            status = true
+
                         }
 
                     }
+                } else {
+                    status = false
+                    res.send({ message: "an error occured", status: false })
                 }
 
-                studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
-                    if (err) {
-                        res.send({ message: "an error occured while adding subject", status: false })
-                    } else {
-                        res.send({ message: "updated, succesfully", status: true })
+                if (status) {
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            res.send({ message: "an error occured while adding subject", status: false })
+                        } else {
+                            res.send({ message: "updated, succesfully", status: true })
 
-                    }
-                })
+                        }
+                    })
+                }
+
+
             }
         }
     })
@@ -799,6 +1175,36 @@ const addValue = (req, res) => {
                                 })
                                 info.totalScore = totalScoreUpdate
 
+                                if (info.totalScore >= req.body.firstGrade.A1[0] && info.totalScore <= req.body.firstGrade.A1[1]) {
+                                    info.grade = "A1"
+                                    info.gradeStatus = "Excellent"
+                                } else if (info.totalScore >= req.body.firstGrade.B2[0] && info.totalScore <= req.body.firstGrade.B2[1]) {
+                                    info.grade = "B2"
+                                    info.gradeStatus = "Very Good"
+                                } else if (info.totalScore >= req.body.firstGrade.B3[0] && info.totalScore <= req.body.firstGrade.B3[1]) {
+                                    info.grade = "B3"
+                                    info.gradeStatus = "Good"
+                                } else if (info.totalScore >= req.body.firstGrade.C4[0] && info.totalScore <= req.body.firstGrade.C4[1]) {
+                                    info.grade = "C4"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.C5[0] && info.totalScore <= req.body.firstGrade.C5[1]) {
+                                    info.grade = "C5"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.C6[0] && info.totalScore <= req.body.firstGrade.C6[1]) {
+                                    info.grade = "C6"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.D7[0] && info.totalScore <= req.body.firstGrade.D7[1]) {
+                                    info.grade = "D7"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.firstGrade.E8[0] && info.totalScore <= req.body.firstGrade.E8[1]) {
+                                    info.grade = "E8"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.firstGrade.F9[0] && info.totalScore <= req.body.firstGrade.F9[1]) {
+                                    info.grade = "F9"
+                                    info.gradeStatus = "Fail"
+                                }
+
+
                             }
                         })
 
@@ -810,6 +1216,34 @@ const addValue = (req, res) => {
                                     totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
+                                if (info.totalScore >= req.body.secondGrade.A1[0] && info.totalScore <= req.body.secondGrade.A1[1]) {
+                                    info.grade = "A1"
+                                    info.gradeStatus = "Excellent"
+                                } else if (info.totalScore >= req.body.secondGrade.B2[0] && info.totalScore <= req.body.secondGrade.B2[1]) {
+                                    info.grade = "B2"
+                                    info.gradeStatus = "Very Good"
+                                } else if (info.totalScore >= req.body.secondGrade.B3[0] && info.totalScore <= req.body.secondGrade.B3[1]) {
+                                    info.grade = "B3"
+                                    info.gradeStatus = "Good"
+                                } else if (info.totalScore >= req.body.secondGrade.C4[0] && info.totalScore <= req.body.secondGrade.C4[1]) {
+                                    info.grade = "C4"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.secondGrade.C5[0] && info.totalScore <= req.body.secondGrade.C5[1]) {
+                                    info.grade = "C5"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.secondGrade.C6[0] && info.totalScore <= req.body.secondGrade.C6[1]) {
+                                    info.grade = "C6"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.secondGrade.D7[0] && info.totalScore <= req.body.secondGrade.D7[1]) {
+                                    info.grade = "D7"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.secondGrade.E8[0] && info.totalScore <= req.body.secondGrade.E8[1]) {
+                                    info.grade = "E8"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.secondGrade.F9[0] && info.totalScore <= req.body.secondGrade.F9[1]) {
+                                    info.grade = "F9"
+                                    info.gradeStatus = "Fail"
+                                }
 
                             }
                         })
@@ -822,6 +1256,34 @@ const addValue = (req, res) => {
                                     totalScoreUpdate += Number(score.valuePoint)
                                 })
                                 info.totalScore = totalScoreUpdate
+                                if (info.totalScore >= req.body.thirdGrade.A1[0] && info.totalScore <= req.body.thirdGrade.A1[1]) {
+                                    info.grade = "A1"
+                                    info.gradeStatus = "Excellent"
+                                } else if (info.totalScore >= req.body.thirdGrade.B2[0] && info.totalScore <= req.body.thirdGrade.B2[1]) {
+                                    info.grade = "B2"
+                                    info.gradeStatus = "Very Good"
+                                } else if (info.totalScore >= req.body.thirdGrade.B3[0] && info.totalScore <= req.body.thirdGrade.B3[1]) {
+                                    info.grade = "B3"
+                                    info.gradeStatus = "Good"
+                                } else if (info.totalScore >= req.body.thirdGrade.C4[0] && info.totalScore <= req.body.thirdGrade.C4[1]) {
+                                    info.grade = "C4"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.thirdGrade.C5[0] && info.totalScore <= req.body.thirdGrade.C5[1]) {
+                                    info.grade = "C5"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.thirdGrade.C6[0] && info.totalScore <= req.body.thirdGrade.C6[1]) {
+                                    info.grade = "C6"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.thirdGrade.D7[0] && info.totalScore <= req.body.thirdGrade.D7[1]) {
+                                    info.grade = "D7"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.thirdGrade.E8[0] && info.totalScore <= req.body.thirdGrade.E8[1]) {
+                                    info.grade = "E8"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.thirdGrade.F9[0] && info.totalScore <= req.body.thirdGrade.F9[1]) {
+                                    info.grade = "F9"
+                                    info.gradeStatus = "Fail"
+                                }
 
                             }
                         })
@@ -1004,6 +1466,7 @@ const addValue = (req, res) => {
                         })
                     }
                 }
+
                 studentModel.findByIdAndUpdate({ _id: req.body.userInfo.studentId }, result, (err) => {
                     if (err) {
                         res.send({ message: "an error occured, while updating", status: false })
@@ -1024,7 +1487,7 @@ const deleteSubject = (req, res) => {
     let newResultArray = []
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
-            res.send({ message: "an error occured", status: false })
+            return res.send({ message: "an error occured", status: false })
         } else {
             if (result !== null) {
                 if (req.body.studentCurrentClass === "Jss1") {
@@ -1134,6 +1597,35 @@ const deletingValuePoint = (req, res) => {
                             if (info.subject === req.body.currentSubject) {
                                 let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
                                 info.totalScore = Number(info.totalScore) - totalscore
+
+                                if (info.totalScore >= req.body.firstGrade.A1[0] && info.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (info.totalScore >= req.body.firstGrade.B2[0] && info.totalScore <= req.body.firstGrade.B2[1]) {
+                                    info.grade = "B2"
+                                    info.gradeStatus = "Very Good"
+                                } else if (info.totalScore >= req.body.firstGrade.B3[0] && info.totalScore <= req.body.firstGrade.B3[1]) {
+                                    info.grade = "B3"
+                                    info.gradeStatus = "Good"
+                                } else if (info.totalScore >= req.body.firstGrade.C4[0] && info.totalScore <= req.body.firstGrade.C4[1]) {
+                                    info.grade = "C4"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.C5[0] && info.totalScore <= req.body.firstGrade.C5[1]) {
+                                    info.grade = "C5"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.C6[0] && info.totalScore <= req.body.firstGrade.C6[1]) {
+                                    info.grade = "C6"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.D7[0] && info.totalScore <= req.body.firstGrade.D7[1]) {
+                                    info.grade = "D7"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.firstGrade.E8[0] && info.totalScore <= req.body.firstGrade.E8[1]) {
+                                    info.grade = "E8"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.firstGrade.F9[0] && info.totalScore <= req.body.firstGrade.F9[1]) {
+                                    info.grade = "F9"
+                                    info.gradeStatus = "Fail"
+                                }
 
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
@@ -1329,13 +1821,13 @@ const deletingValuePoint = (req, res) => {
 
 
 const EditSubject = (req, res) => {
-    let check = []
-    let status = false
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured" })
         } else {
             if (result !== null) {
+                let check = []
+                let status = false
                 if (req.body.studentClass === "Jss1") {
                     if (req.body.term === 1) {
                         check = result.jss1.firstTermResult.filter((info, id) => info.subject === req.body.newSubject)
@@ -1592,18 +2084,19 @@ const EditSubject = (req, res) => {
 }
 
 const editValuePointName = (req, res) => {
-    let check = []
-    let status = false
+
     studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured" })
         } else {
             if (result !== null) {
+                let check = []
+                let status = false
                 if (req.body.studentClass === "Jss1") {
                     if (req.body.term === 1) {
                         result.jss1.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1623,7 +2116,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.jss1.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1643,12 +2136,12 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss1.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, id) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
                         if (check.length > 0) {
-                            res.send({ message: "an value name already exist", status: false })
+                            res.send({ message: "value name already exist", status: false })
                             status = false
                         } else {
                             status = true
@@ -1666,7 +2159,7 @@ const editValuePointName = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss2.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1685,7 +2178,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.jss2.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1705,7 +2198,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss2.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1728,7 +2221,7 @@ const editValuePointName = (req, res) => {
                     if (req.body.term === 1) {
                         result.jss3.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1746,7 +2239,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.jss3.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1766,7 +2259,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.jss3.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1787,7 +2280,7 @@ const editValuePointName = (req, res) => {
                     if (req.body.term === 1) {
                         result.sss1.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1806,7 +2299,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.sss1.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1826,7 +2319,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.sss1.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1848,7 +2341,7 @@ const editValuePointName = (req, res) => {
                     if (req.body.term === 1) {
                         result.sss2.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1867,7 +2360,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.sss2.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1887,7 +2380,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.sss2.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1909,7 +2402,7 @@ const editValuePointName = (req, res) => {
                     if (req.body.term === 1) {
                         result.sss3.firstTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1928,7 +2421,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 2) {
                         result.sss3.secondTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1948,7 +2441,7 @@ const editValuePointName = (req, res) => {
                     } else if (req.body.term === 3) {
                         result.sss3.thirdTermResult.map((subject, id) => {
                             if (subject.subject === req.body.subject) {
-                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName === req.body.newSubject)
+                                check = subject.resultNameXResultScore.filter((info, ud) => info.valueName.toUpperCase() === req.body.newSubject.toUpperCase())
                             }
 
                         })
@@ -1997,6 +2490,35 @@ const editValuePoint = (req, res) => {
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
 
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
+
                             }
 
                         })
@@ -2008,6 +2530,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2020,6 +2570,7 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
                             }
 
                         })
@@ -2110,6 +2661,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
 
                             }
 
@@ -2230,6 +2809,61 @@ const editValuePoint = (req, res) => {
     })
 }
 
+
+
+///deactivateStudent from a set 
+const deactivate = (req, res) => {
+    studentModel.findOne({ _id: req.body.studentId }, (err, result) => {
+        if (err) {
+            return res.send({ status: false, message: "an error occured" })
+        } else {
+            if (result !== null) {
+                let status = false
+                if (req.body.currentClass === "Jss1") {
+                    result.jss1Id = ""
+                    result.jss1 = {}
+                    status = true
+
+                } else if (req.body.currentClass === "Jss2") {
+                    result.jss2Id = ""
+                    result.jss2 = {}
+                    status = true
+                } else if (req.body.currentClass === "Jss3") {
+                    result.jss3Id = ""
+                    result.jss3 = {}
+                    status = true
+                } else if (currentClass === "Sss1") {
+                    result.sss1Id = ""
+                    result.sss1 = {}
+
+                } else if (req.body.currentClass === "Sss2") {
+                    result.jss1Id = ""
+                    result.jss1 = {}
+
+                } else if (req.body.currentClass === "Sss3") {
+                    result.jss1Id = ""
+                    result.jss1 = {}
+
+                }
+                if (status) {
+                    studentModel.findByIdAndUpdate({ _id: req.body.studentId }, result, (err) => {
+                        if (err) {
+                            return res.send({ status: false, message: "an error occured deactivating" })
+                        } else {
+                            return res.send({ status: true, message: "student deactivated succesfully" })
+                        }
+                    })
+                }
+
+
+            } else {
+                res.send({ message: "couldn't find user", status: false })
+            }
+        }
+    })
+}
+
+
 module.exports = {
     registerStudent,
     searchStudentBelowSet,
@@ -2247,7 +2881,6 @@ module.exports = {
     deletingValuePoint,
     EditSubject,
     editValuePointName,
-    editValuePoint
-
-
+    editValuePoint,
+    deactivate,
 }
