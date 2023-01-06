@@ -1586,6 +1586,35 @@ const deletingValuePoint = (req, res) => {
                                 let totalscore = Number(info.resultNameXResultScore[req.body.valuePointId].valuePoint)
                                 info.totalScore = Number(info.totalScore) - totalscore
 
+                                if (info.totalScore >= req.body.firstGrade.A1[0] && info.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (info.totalScore >= req.body.firstGrade.B2[0] && info.totalScore <= req.body.firstGrade.B2[1]) {
+                                    info.grade = "B2"
+                                    info.gradeStatus = "Very Good"
+                                } else if (info.totalScore >= req.body.firstGrade.B3[0] && info.totalScore <= req.body.firstGrade.B3[1]) {
+                                    info.grade = "B3"
+                                    info.gradeStatus = "Good"
+                                } else if (info.totalScore >= req.body.firstGrade.C4[0] && info.totalScore <= req.body.firstGrade.C4[1]) {
+                                    info.grade = "C4"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.C5[0] && info.totalScore <= req.body.firstGrade.C5[1]) {
+                                    info.grade = "C5"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.C6[0] && info.totalScore <= req.body.firstGrade.C6[1]) {
+                                    info.grade = "C6"
+                                    info.gradeStatus = "Credit"
+                                } else if (info.totalScore >= req.body.firstGrade.D7[0] && info.totalScore <= req.body.firstGrade.D7[1]) {
+                                    info.grade = "D7"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.firstGrade.E8[0] && info.totalScore <= req.body.firstGrade.E8[1]) {
+                                    info.grade = "E8"
+                                    info.gradeStatus = "Pass"
+                                } else if (info.totalScore >= req.body.firstGrade.F9[0] && info.totalScore <= req.body.firstGrade.F9[1]) {
+                                    info.grade = "F9"
+                                    info.gradeStatus = "Fail"
+                                }
+
                                 let newScore = info.resultNameXResultScore.filter((point, id) => id !== req.body.valuePointId)
                                 info.resultNameXResultScore = newScore
 
@@ -2570,6 +2599,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
 
                             }
 
@@ -2585,6 +2642,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
 
                             }
 
@@ -2597,6 +2682,35 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2609,6 +2723,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2623,6 +2765,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
 
                             }
 
@@ -2635,6 +2805,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2647,6 +2845,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2701,6 +2927,34 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2713,6 +2967,35 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2728,6 +3011,35 @@ const editValuePoint = (req, res) => {
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
 
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
+
                             }
 
                         })
@@ -2739,6 +3051,35 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2751,6 +3092,35 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2766,6 +3136,35 @@ const editValuePoint = (req, res) => {
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
 
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
+
                             }
 
                         })
@@ -2777,6 +3176,35 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })
@@ -2789,6 +3217,35 @@ const editValuePoint = (req, res) => {
                                 subject.totalScore = Number(subject.totalScore) + Number(req.body.newValuePoint)
 
                                 subject.resultNameXResultScore[req.body.id].valuePoint = req.body.newValuePoint
+
+                                if (subject.totalScore >= req.body.firstGrade.A1[0] && subject.totalScore <= req.body.firstGrade.A1[1]) {
+                                    subject.grade = "A1"
+                                    subject.gradeStatus = "Excellent"
+                                } else if (subject.totalScore >= req.body.firstGrade.B2[0] && subject.totalScore <= req.body.firstGrade.B2[1]) {
+                                    subject.grade = "B2"
+                                    subject.gradeStatus = "Very Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.B3[0] && subject.totalScore <= req.body.firstGrade.B3[1]) {
+                                    subject.grade = "B3"
+                                    subject.gradeStatus = "Good"
+                                } else if (subject.totalScore >= req.body.firstGrade.C4[0] && subject.totalScore <= req.body.firstGrade.C4[1]) {
+                                    subject.grade = "C4"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C5[0] && subject.totalScore <= req.body.firstGrade.C5[1]) {
+                                    subject.grade = "C5"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.C6[0] && subject.totalScore <= req.body.firstGrade.C6[1]) {
+                                    subject.grade = "C6"
+                                    subject.gradeStatus = "Credit"
+                                } else if (subject.totalScore >= req.body.firstGrade.D7[0] && subject.totalScore <= req.body.firstGrade.D7[1]) {
+                                    subject.grade = "D7"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.E8[0] && subject.totalScore <= req.body.firstGrade.E8[1]) {
+                                    subject.grade = "E8"
+                                    subject.gradeStatus = "Pass"
+                                } else if (subject.totalScore >= req.body.firstGrade.F9[0] && subject.totalScore <= req.body.firstGrade.F9[1]) {
+                                    subject.grade = "F9"
+                                    subject.gradeStatus = "Fail"
+                                }
                             }
 
                         })

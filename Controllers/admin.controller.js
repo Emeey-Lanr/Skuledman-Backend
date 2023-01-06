@@ -1068,10 +1068,11 @@ const dashDetails = (req, res) => {
                                 }
                                 afterCalculation()
 
+
                             } else {
                                 res.send({
-                                    message: "succesful",
-                                    status: true,
+                                    message: "can;t find",
+                                    status: false,
                                     schoolDetails: schoolDetails,
                                     Jss1TotalNumber: Jss1StudentNumber,
                                     Jss1Set: Jss1Set,
