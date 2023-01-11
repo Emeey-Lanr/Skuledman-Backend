@@ -448,14 +448,17 @@ const dashDetails = (req, res) => {
             schoolModel.findOne({ _id: result.pass.split(",")[1] }, (err, result) => {
                 if (err) {
                     res.send({ status: false })
+                    console.log(err)
                 } else {
+                    console.log(result)
                     schoolDetails = result
                     setSchemaModel.find({ schoolId: schoolId }, (err, result) => {
                         if (err) {
                             res.send({ message: "an error occured", status: false })
+                            console.log(err)
                         } else {
+                            console.log(result)
                             if (result.length > 0) {
-
                                 ///Junior
                                 const jss1ClassSet = result.filter((info) => info.class === "Jss1")
                                 console.log(jss1ClassSet, "********")
@@ -515,10 +518,12 @@ const dashDetails = (req, res) => {
                                                 if (err) {
                                                     status = true
                                                 } else {
-
                                                     Jss1StudentNoFirstTerm = result.filter((info) => info.jss1.firstTermStatus === true)
                                                     Jss1StudentNoSecondTerm = result.filter((info) => info.jss1.secondTermStatus === true)
                                                     Jss1StudentNoThirdTerm = result.filter((info) => info.jss1.thirdTermStatus === true)
+
+                                                    console.log(Jss1StudentNoFirstTerm, "show face plass")
+
                                                     if (Jss1StudentNoFirstTerm.length > 0 && Jss1StudentNoSecondTerm.length === 0 && Jss1StudentNoThirdTerm.length === 0) {
                                                         Jss1StudentTerm = "FirstTerm"
                                                         Jss1StudentNumber = Jss1StudentNoFirstTerm.length
@@ -978,7 +983,7 @@ const dashDetails = (req, res) => {
                                     if (status) {
                                         res.send({ message: "an error occured", status: false })
                                     } else {
-                                        console.log("yessssssssssssssssssssssssssssssssssssssssssssssss")
+                                        console.log("yessssssssssssssssssssssssssssssssssssssssssssssss",)
                                         res.send({
                                             message: "succesful",
                                             status: true,
@@ -1072,7 +1077,7 @@ const dashDetails = (req, res) => {
                             } else {
                                 res.send({
                                     message: "can;t find",
-                                    status: false,
+                                    status: true,
                                     schoolDetails: schoolDetails,
                                     Jss1TotalNumber: Jss1StudentNumber,
                                     Jss1Set: Jss1Set,
@@ -1212,7 +1217,8 @@ const sendGeneralMail = (req, res) => {
 }
 
 const uploadSchoolImg = (req, res) => {
-    cloudinary.v2.uploader.upload(req.body.imgUrl, { public_id: "studentimage" }, (error, result) => {
+    console.log(req.body)
+    cloudinary.v2.uploader.upload(req.body.imgurl, { public_id: "studentimage" }, (error, result) => {
         if (error) {
             res.send({ message: "an error happened uploading", status: false })
         } else {

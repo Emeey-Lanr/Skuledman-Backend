@@ -3,8 +3,8 @@ const setSchemaModel = require("../Models/set")
 const studentModel = require("../Models/Student")
 const schoolModel = require("../Models/schoolModel")
 const nodemailer = require("nodemailer")
-const res = require("express/lib/response")
-const { resolve } = require("chart.js/dist/helpers/helpers.options")
+
+// const res = require("express/lib/response")
 
 let check = false
 let schoolid = ""
@@ -95,11 +95,20 @@ const getCurrentSet = (req, res) => {
         } else {
             const findSchoolDetails = () => {
                 schoolModel.findOne({ _id: resultFound.schoolId }, (err, schoolDetails) => {
-                    if (err) {
+                    return new Promise((resolve, reject) => {
+                        if (err) {
 
-                    } else {
-                        schoolDetailsInfo = schoolDetails
-                    }
+                        } else {
+                            schoolDetailsInfo = schoolDetails
+                        }
+                        const error = false
+                        if (!error) {
+                            resolve()
+                        } else {
+                            reject("an error occured")
+                        }
+                    })
+
                 })
             }
             const calculateIfJss1 = () => {
@@ -505,6 +514,7 @@ const getCurrentSet = (req, res) => {
 
 
             }
+            runAfterCalculating()
         }
     })
 }
@@ -697,13 +707,7 @@ const sendMail = (req, res) => {
     let status = false
     let userEmail = []
     let allEmail = ""
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'skuledman@gmail.com',
-            pass: process.env.appPass,
-        }
-    })
+
     if (req.body.class === "Jss1") {
         studentModel.find({ jss1Id: info[0] }, (err, result) => {
             if (err) {
@@ -951,14 +955,15 @@ const sendListToParent = (req, res) => {
     let parentGmails = ""
     let status = false
     let term = ""
+    let studentWithParentGmail = []
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'skuledman@gmail.com',
-            pass: process.env.appPass,
-        }
-    })
+    // var transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: 'skuledman@gmail.com',
+    //         pass: process.env.appPass,
+    //     }
+    // })
     setSchemaModel.findOne({ _id: req.body.setId }, (err, result) => {
         if (err) {
             res.send({ message: "an error occured", status: false })
@@ -967,51 +972,63 @@ const sendListToParent = (req, res) => {
                 schoolModel.findOne({ _id: result.schoolId }, (err, schoolFound) => {
                     if (err) {
                         res.send({ message: "an error occured", status: false })
+                        console.log(err)
                     } else {
                         if (req.body.term === "firstTerm") {
                             term = "FirstTerm"
                             result.firstTerm["otherFee"].map((info, id) => {
-                                description += info.description + "</br>"
-                                amount += info.amount + "</br>"
+                                description += info.description + "<br>"
+                                amount += info.amount + "<br>"
 
                             })
 
                         } else if (req.body.term === "secondTerm") {
                             term = "Second Term"
                             result.secondTerm["otherFee"].map((info, id) => {
-                                description += info.description + "</br>"
-                                amount += info.amount + "</br>"
+                                description += info.description + "<br>"
+                                amount += info.amount + "<br>"
                             })
                         } else if (req.body.term === "thirdTerm") {
                             term = "Third Term"
                             result.thirdTerm["otherFee"].map((info, id) => {
-                                description += info.description + "</br>"
-                                amount += info.amount + "</br>"
+                                description += info.description + "<br>"
+                                amount += info.amount + "<br>"
                             })
                         }
                         const jss1GmailList = () => {
                             if (result.class === "Jss1") {
-                                studentModel.find({ jss1Id: req.body.setId }, (err, student) => {
-                                    if (err) {
-                                        res.send({ message: "an error occured", status: false })
-                                    } else {
-                                        if (student.length > 0) {
+                                return new Promise((resolve, reject) => {
+                                    studentModel.find({ jss1Id: req.body.setId }, (err, student) => {
+                                        if (err) {
+                                            status = true
+                                        } else {
+                                            if (student.length > 0) {
 
-                                            let studentWithParentGmail = student.filter((info, id) => info.parentGmail !== "")
+                                                studentWithParentGmail = student.filter((info, id) => info.parentGmail !== "")
 
-                                            if (studentWithParentGmail.length > 0) {
-                                                status = true
-                                                studentWithParentGmail.map((gmail, id) => {
+                                                if (studentWithParentGmail.length > 0) {
+                                                    studentWithParentGmail.map((gmail) => {
 
-                                                    parentGmails += gmail.parentGmail + ","
-                                                })
+                                                        parentGmails += gmail.parentGmail + ","
+                                                    })
 
+                                                } else {
+                                                    status = false
+                                                }
+                                            }
+
+                                            const error = false
+                                            if (!error) {
+                                                resolve()
                                             } else {
-                                                status = false
+                                                reject("an error occured")
                                             }
                                         }
-                                    }
+                                    })
+
+
                                 })
+
                             }
                         }
                         const jss2GmailList = () => {
@@ -1019,7 +1036,7 @@ const sendListToParent = (req, res) => {
                                 return new Promise((resolve, reject) => {
                                     studentModel.find({ jss2Id: req.body.setId }, (err, student) => {
                                         if (err) {
-                                            status = false
+                                            status = true
                                         } else {
                                             if (student.length > 0) {
 
@@ -1035,16 +1052,18 @@ const sendListToParent = (req, res) => {
                                                 } else {
                                                     status = false
                                                 }
+
                                             }
+
+                                            const error = false
+                                            if (!error) {
+                                                resolve()
+                                            } else {
+                                                reject("an error occured")
+                                            }
+
                                         }
                                     })
-
-                                    const error = false
-                                    if (!error) {
-                                        resolve()
-                                    } else {
-                                        reject("an error occured")
-                                    }
 
                                 })
 
@@ -1056,7 +1075,7 @@ const sendListToParent = (req, res) => {
                                 return new Promise((resolve, reject) => {
                                     studentModel.find({ jss3Id: req.body.setId }, (err, student) => {
                                         if (err) {
-                                            status = false
+                                            status = true
                                         } else {
                                             if (student.length > 0) {
                                                 let studentWithParentGmail = student.filter((info, id) => info.parentGmail !== "")
@@ -1091,7 +1110,7 @@ const sendListToParent = (req, res) => {
                                 return new Promise((resolve, reject) => {
                                     studentModel.find({ sss1Id: req.body.setId }, (err, student) => {
                                         if (err) {
-                                            status = false
+                                            status = true
                                         } else {
                                             if (student.length > 0) {
 
@@ -1108,15 +1127,16 @@ const sendListToParent = (req, res) => {
                                                     status = false
                                                 }
                                             }
+                                            const error = false
+                                            if (!error) {
+                                                resolve()
+                                            } else {
+                                                reject("an error occured")
+                                            }
                                         }
                                     })
 
-                                    const error = false
-                                    if (!error) {
-                                        resolve()
-                                    } else {
-                                        reject("an error occured")
-                                    }
+
 
                                 })
 
@@ -1128,7 +1148,7 @@ const sendListToParent = (req, res) => {
                                 return new Promise((resolve, reject) => {
                                     studentModel.find({ sss2Id: req.body.setId }, (err, student) => {
                                         if (err) {
-                                            status = false
+                                            status = true
                                         } else {
                                             if (student.length > 0) {
 
@@ -1145,15 +1165,17 @@ const sendListToParent = (req, res) => {
                                                     status = false
                                                 }
                                             }
+
+                                            const error = false
+                                            if (!error) {
+                                                resolve()
+                                            } else {
+                                                reject("an error occured")
+                                            }
                                         }
                                     })
 
-                                    const error = false
-                                    if (!error) {
-                                        resolve()
-                                    } else {
-                                        reject("an error occured")
-                                    }
+
 
                                 })
 
@@ -1165,7 +1187,7 @@ const sendListToParent = (req, res) => {
                                 return new Promise((resolve, reject) => {
                                     studentModel.find({ sss3Id: req.body.setId }, (err, student) => {
                                         if (err) {
-                                            status = false
+                                            status = true
                                         } else {
                                             if (student.length > 0) {
 
@@ -1175,22 +1197,23 @@ const sendListToParent = (req, res) => {
                                                     status = true
                                                     studentWithParentGmail.map((gmail, id) => {
 
-                                                        parentGmails += gmail.parentGmail + ","
+                                                        parentGmails += gmail.parentGmail
                                                     })
 
                                                 } else {
                                                     status = false
                                                 }
                                             }
+
+                                            const error = false
+                                            if (!error) {
+                                                resolve()
+                                            } else {
+                                                reject("an error occured")
+                                            }
                                         }
                                     })
 
-                                    const error = false
-                                    if (!error) {
-                                        resolve()
-                                    } else {
-                                        reject("an error occured")
-                                    }
 
                                 })
 
@@ -1208,34 +1231,44 @@ const sendListToParent = (req, res) => {
                             await sss3GmailList()
 
                             if (status) {
-                                userEmail.map((info, id) => {
-                                    var mailOptions = {
-                                        from: schoolFound.gmail,
-                                        to: parentGmails,
-                                        subject: schoolFound.schoolName + "" + result.set + "" + term,
-                                        text: '',
-                                        html:
-                                            `
-                                        <div>
+                                res.send({ message: "an error occured", status: false })
+                            } else {
+                                console.log(parentGmails)
+                                var transporter = nodemailer.createTransport({
+                                    service: 'gmail',
+                                    auth: {
+                                        user: 'skuledman@gmail.com',
+                                        pass: process.env.appPass,
+                                    }
+                                })
+
+                                var mailOptions = {
+                                    from: "skuledman@gmail.com",
+                                    to: parentGmails,
+                                    subject: schoolFound.schoolName + "" + result.set + "" + term,
+                                    text: '',
+                                    html:
+                                        `
+                                        <div style="display:flex;background:#fafafa; width:80%;margin:0 auto;">
                                         <p>${description}</p>
                                         <p>${amount}</p>
                                         </div>
                                         `
 
-                                    }
-                                    transporter.sendMail(mailOptions, (err, result) => {
-                                        if (err) {
-                                            res.send({ message: 'email not sentSuccesfully', status: false })
-                                        } else {
-                                            res.send({ message: 'email sent succesfully', status: true, })
+                                }
+                                transporter.sendMail(mailOptions, (err, result) => {
+                                    if (err) {
+                                        console.log(err)
+                                        res.send({ message: 'email not sentSuccesfully', status: false })
+                                    } else {
+                                        res.send({ message: 'email sent succesfully', status: true, })
 
-                                        }
-                                    })
+                                    }
                                 })
-                            } else {
-                                res.send({ message: "an error occured", status: false })
+
                             }
                         }
+                        sendMailToParent()
 
                     }
                 })
@@ -1290,7 +1323,7 @@ const addsubjectToSet = (req, res) => {
                         result.firstTerm.commercialSubject = req.body.subjectToBeAdded
                         result.firstTerm.commercialChanges = Number(result.firstTerm.commercialChanges) + 1
                     } else {
-                        result.secondTerm.juniorSubject = req.body.subjectToBeAdded
+                        result.firstTerm.juniorSubject = req.body.subjectToBeAdded
                         result.firstTerm.juniorSubjectChanges = Number(result.firstTerm.juniorSubjectChanges) + 1
                     }
 
